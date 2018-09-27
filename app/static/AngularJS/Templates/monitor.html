@@ -1,2 +1,14 @@
 <div cg-busy="myPromise" ng-init="init()" id="contentManager">
-	Hola Monitor
+    Hola Monitor
+    <div class="row">
+        <empresas></empresas>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <button type="button" class="btn btn-primary" ng-click="BuscarLotesxFechaTesoreria(dtini,dtfin)" ng-show="buscarLotes">Buscar</button>
+        </div>
+    </div>
+    <div class="row">
+        <div ui-grid="gridtesoreriaoptions" ui-grid-selection class="gridlotes"></div>
+    </div>
+</div>

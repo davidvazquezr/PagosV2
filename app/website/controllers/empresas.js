@@ -1,12 +1,12 @@
 var request = require('request'),
-    aprobModel = require('../models/dataAccess'),
-    noView = require('../views/pagos');
+    empresasModel = require('../models/dataAccess'),
+    empresasView = require('../views/pagos');
 
 
 var empresas = function(conf) {
     this.conf = conf || {};
-    this.view = new noView();
-    this.model = new aprobModel({
+    this.view = new empresasView();
+    this.model = new empresasModel({
         parameters: this.conf.parameters
     });
     /*if (conf) {
