@@ -1,27 +1,16 @@
 <div ng-controller="empresasController" ng-init="init()">
-   <!--  <h4 class="space-bottom">Empresas:</h4>
-    <div class="col-md-12">
-        <div class="col-sm-6">
-            <select ng-change="cambioEmpresa(empresaActual)" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
-        </div>
-    </div> -->
-      <div class="row">
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label>Empresa</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" ng-model='empresa.emp_nombre' aria-label="...">
-                    <div class="input-group-btn">
-                        <button id="btnTotalxEmpresa" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo cartera..." autocomplete="off">Seleccione <span class="caret"></span></button>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li ng-repeat="empresa in empresas">
-                                <a href="#" ng-click="empresaSeleccion(empresa)">{{empresa.emp_nombre}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+    <div class="form-group">
+        <label>Seleccione la empresa</label>
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model='empresa.emp_nombre' aria-label="...">
+            <div class="input-group-btn">
+                <button id="btnTotalxEmpresa" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo cartera..." autocomplete="off">Seleccione <span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li ng-repeat="empresa in empresas">
+                        <a href="#" ng-click="empresaSeleccion(empresa)">{{empresa.emp_nombre}}</a>
+                    </li>
+                </ul>
             </div>
         </div>
-      
     </div>
 </div>

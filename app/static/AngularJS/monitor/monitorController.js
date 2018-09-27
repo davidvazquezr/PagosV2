@@ -1,24 +1,19 @@
 registrationModule.controller('monitorController', function($scope, $rootScope, alertFactory, monitorRepository, uiGridGroupingConstants, utils, uiGridConstants) {
     openCloseNav();
-    $scope.idEmpresa = '';
+
+    $rootScope.empresa = "";
     $scope.buscarLotes = false;
 
-
     $scope.init = function() {
-        console.log('Logre entrar al Monitor :D')
         $scope.BuscarTesoreria();
     };
 
-
-
     $scope.empresaSeleccion = function(empresa) {
-        
-         $scope.idEmpresa = empresa.emp_idempresa
-         $scope.buscarLotes = true;
+        $rootScope.empresa = empresa;
+        $scope.buscarLotes = true;
     }
 
-     $scope.BuscarTesoreria = function() {
-
+    $scope.BuscarTesoreria = function() {
 
         $scope.gridtesoreriaoptions = {
             enableRowSelection: true,
@@ -50,24 +45,32 @@ registrationModule.controller('monitorController', function($scope, $rootScope, 
     }
 
 
-    $scope.BuscarLotesxFechaTesoreria = function(fechaini, fechafin) {
+    $scope.Buscar = function(fechaini, fechafin) {
+      
+        var fecha_ini = $scope.formatDate(fechaini);
+        var fecha_fin = $scope.formatDate(fechafin);
 
-       // var fecha_ini = $scope.formatDate(fechaini);
-       // var fecha_fin = $scope.formatDate(fechafin);
-
-        monitorRepository.getLotesxFecha($scope.idEmpresa,77, '2018/05/05', '2018/06/29', 3)
+        monitorRepository.getLotesxFecha($rootScope.empresa.emp_idempresa, 77, fecha_ini, fecha_fin, 3)
             .then(function successCallback(response) {
-              
-
-                if (response.data.length == 0) 
+                if (response.data.length == 0)
                     alertFactory.infoTopFull('No existen lotes para este rango de fechas');
-                  else
-                      $scope.gridtesoreriaoptions.data = response.data;
-                
+                else
+                    $scope.gridtesoreriaoptions.data = response.data;
 
             }, function errorCallback(response) {
                 alertFactory.error('Error al obtener los datos del encabezado.');
             });
+    }
+
+
+    $scope.formatDate = function(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+        return [year, month, day].join('/');
     }
 
 });

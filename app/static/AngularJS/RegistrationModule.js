@@ -56,6 +56,12 @@
             templateUrl: '/AngularJS/Templates/empresas.html',
             controller: 'empresasController'
         });
+
+         $routeProvider.when('/calendarios', {
+            templateUrl: '/AngularJS/Templates/calendarios.html',
+            controller: 'calendariosController'
+        });
+
         $locationProvider.html5Mode(true);
     });
 

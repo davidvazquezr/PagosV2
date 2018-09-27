@@ -1,4 +1,14 @@
 <div cg-busy="myPromise" ng-init="init()" id="contentManager">
-	 <h4 class="space-bottom">Consulta de Lotes</h4>
-	<empresas></empresas>
+    <h4 class="space-bottom">Consulta de Lotes</h4>
+    <div class="row">
+        <div class="col-sm-9">
+            <empresas></empresas>
+        </div>
+    </div>
+    <div class="row">
+        <calendarios></calendarios>
+    </div>
+    <div class="rows">
+        <div ui-grid="gridLotesoptions" ui-grid-selection class="gridlotes"></div>
+    </div>
 </div>

@@ -26,8 +26,6 @@ monitor.prototype.get_lotesxFechas = function(req, res, next) {
         { name: 'estatus', value: req.query.estatus, type: self.model.types.INT }
     ];
 
-    console.log('SEL_LOTES_POR_FECHA_SP', params);
-
     this.model.query('SEL_LOTES_POR_FECHA_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,

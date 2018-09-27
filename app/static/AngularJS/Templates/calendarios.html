@@ -1,0 +1,22 @@
+<div ng-controller="calendariosController" ng-init="init()">
+    <div class="col-sm-9">
+        <h4>Seleccionar rango de Fechas</h4>
+    </div>
+    <div class="col-md-4">
+        <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup ng-model="dtini" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+            <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span></p>
+    </div>
+    <div class="col-md-4">
+        <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup ng-model="dtfin" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span></p>
+    </div>
+    <div class="col-sm-4">
+        <button type="button" class="btn btn-primary" ng-click="Buscar(dtini,dtfin)" ng-show="buscarLotes">Buscar</button>
+    </div>
+</div>
