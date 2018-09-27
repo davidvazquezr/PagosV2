@@ -14,6 +14,11 @@
         templateUrl: '/AngularJS/Templates/consultaLote.html',
         controller: 'consultaLoteController'
     });
+    $routeProvider.when('/monitor', {
+        templateUrl: '/AngularJS/Templates/monitor.html',
+        controller: 'monitorController'
+    });
+    //
     $routeProvider.when('/pago', {
         templateUrl: '/AngularJS/Templates/Pago.html',
         controller: 'pagoController'
