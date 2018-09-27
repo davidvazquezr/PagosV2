@@ -18,6 +18,14 @@
         templateUrl: '/AngularJS/Templates/monitor.html',
         controller: 'monitorController'
     });
+    $routeProvider.when('/unificacion', {
+        templateUrl: '/AngularJS/Templates/Unificacion.html',
+        controller: 'unificacionController'
+    });
+    $routeProvider.when('/administracionCartera', {
+        templateUrl: '/AngularJS/Templates/AdministracionCartera.html',
+        controller: 'admonCarteraController'
+    });
     //
     $routeProvider.when('/pago', {
         templateUrl: '/AngularJS/Templates/Pago.html',

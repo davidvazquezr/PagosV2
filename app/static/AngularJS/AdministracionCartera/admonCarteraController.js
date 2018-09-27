@@ -1,4 +1,5 @@
 registrationModule.controller("admonCarteraController", function($scope, $rootScope, admonCarteraRepository, unificacionRepository, alertFactory, $filter, globalFactory) {
+    openCloseNav();
     $scope.empresaSeleccion = function(empresa) {
 
         $scope.empresa = empresa;

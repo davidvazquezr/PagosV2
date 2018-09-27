@@ -1,4 +1,5 @@
 registrationModule.controller("unificacionController", function($scope, $rootScope, unificacionRepository, alertFactory) {
+    openCloseNav();
     $scope.activaBoton = false;
     $scope.limpiaBusqueda = function() {
         $scope.id = '';

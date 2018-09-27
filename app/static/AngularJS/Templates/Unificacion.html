@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="css/unificacion.css">
-<div ng-controller="unificacionController" ng-init="init()">
-	<h4 class="space-bottom">Unificación de Cuentas Bancarias </h4>
+<div cg-busy="myPromise" ng-init="init()" id="contentManager">
+    <h4 class="space-bottom">Unificación de Cuentas Bancarias </h4>
     <h5 class="space-bottom">Búsqueda de Proveedor</h5>
     <form class="form-inline">
         <input type="text" class="form-control" placeholder="Id" ng-model="id" ng-disabled="rfc || nombre">
@@ -69,13 +69,12 @@
                     </tbody>
                 </table>
                 <div>
-                	<div class="alert alert-danger" role="alert" ng-show="alertDanger">{{mensaje}}</div>
+                    <div class="alert alert-danger" role="alert" ng-show="alertDanger">{{mensaje}}</div>
                 </div>
             </div>
         </div>
         <div class="col-sm-11">
-        	<button type="button" class="btn btn-success pull-right" ng-click="verificaCuenta()" ng-if="cuentaSel"><i class="glyphicon glyphicon-indent-right"> Unificar</i></button>
+            <button type="button" class="btn btn-success pull-right" ng-click="verificaCuenta()" ng-if="cuentaSel"><i class="glyphicon glyphicon-indent-right"> Unificar</i></button>
         </div>
     </div>
 </div>
-
