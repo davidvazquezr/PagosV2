@@ -1,0 +1,18 @@
+.resize {
+    min-height: 100vh;
+    height: auto;
+    position: relative;
+    min-width: 290px;
+    overflow: hidden;
+}
+
+@media screen and (max-height: 26.375em) {
+    .cbp-spmenu-left,
+    .cbp-spmenu-push-toleft {
+        left: -240px;
+    }
+    .cbp-spmenu-vertical {
+        font-size: 90%;
+        width: 240px;
+    }
+}

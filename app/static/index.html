@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="no-js" lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Programación de pagos - Grupo Andrade</title>
+    <meta name='description' content='Grupo Andrade' />
+    <!-- Libreria de Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900italic' rel='stylesheet' type='text/css'>
+    <!--Hojas de estilos-->
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
+    <link href="css/search.css" rel="stylesheet" />
+    <link href="css/nodo.css" rel="stylesheet" />
+    <!--Loading-->
+    <link href="css/toastr.css" rel="stylesheet" />
+    <link href="css/angular-busy.css" rel="stylesheet" />
+    <link href="../css/pago.css" rel="stylesheet" />
+    <link href="../css/stylechk.css" rel="stylesheet" />
+    <!--Menu-->
+    <!-- <link rel="stylesheet" type="text/css" href="css/menu/default.css" /> -->
+    <link rel="stylesheet" type="text/css" href="css/menu/component.css" />
+    <!--Librearias JQuery y Bootstrap-->
+    <script src="js/jquery-2.1.4.js"></script>
+    <!--Agrego FAL 24022016 para la funcion de order y selected-->
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap-switch.js"></script>
+    <!-- Sidebar -->
+    <link rel="stylesheet" type="text/css" href="css/sidebar/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/sidebar/component.css" />
+    <link rel="stylesheet" type="text/css" href="css/sidebar/body.css" />
+    <link rel="stylesheet" type="text/css" href="css/ui-grid.css" />
+    <link rel="stylesheet" type="text/css" href="css/sidetools/component.css" />
+    <link rel="stylesheet" type="text/css" href="css/pago.css" />
+    <link rel="stylesheet" type="text/css" href="css/dataTable/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/main/main.css" />
+    <script src="js/sidebar/modernizr.custom.js"></script>
+    <base href='/'>
+</head>
+
+<body ng-app="registrationModule">
+    <!-- Contenedor de información -->
+    <div id="st-container">
+        <!-- content push wrapper -->
+        <div class="st-pusher" ng-keyup="$event.keyCode == 13 ? Search() : null">
+            <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+                <div ng-controller="mainController" ng-init="init()">
+                    <h3 class="icon h2extends"><span class="glyphicon glyphicon-home headSearch" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;&nbsp;Menú</h3>
+                    <br>
+                    <br>
+                    <br>
+                    <li><a href="/consultaLote"><span class="glyphicon glyphicon-calendar"></span> Consulta Lote <!-- <span class="badge pull-right">42</span> --></a></li>
+                    <li><a href="/"><span class="glyphicon glyphicon-plus"></span> Crear Lote</a></li>
+                    <li><a href="/unificacion"><span class="glyphicon glyphicon-link"></span>Unificación de cuentas</a></li>
+                    <li><a href="/monitor"><span class="glyphicon glyphicon-usd"></span> Monitor de Tesoreria</a></li>
+                    <li><a href="/administracionCartera"><span class="glyphicon glyphicon-transfer"></span> Administración de Carteras</a></li>
+                    <li><a href="#" id="closeMenu"><span class="glyphicon glyphicon-remove"></span> Cerrar</a></li>
+                </div>
+            </nav>
+            <div id="st-trigger-effects" class="column">
+                <nav class="navbar navbar-default navHeader">
+                    <!-- Inicia NAV bar -->
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header ajustaIzquierda">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Navegador</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <button class="navbar-brand" id="slide" data-effect="st-effect-3">
+                                <span class="glyphicon glyphicon-th blanco" id="menu" aria-hidden="true"></span>
+                            </button>
+                            <a class="navbar-brand" href="#"><span class="blanco">Programación de pagos</span></a>
+                        </div>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="dropdown" id="mnuAvatar">
+                                    <a id="mnuUser" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <span class="blanco">{{ empleado.nombre }}</span> 
+                                        <img src="image/profile/man.jpg" id="avatar">
+                                        <span class="caret blanco" id="nombreEmpleado"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="seleccionable"><a ng-click="Salir()">Salir</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+                <div id="maestroContenedor" class="resize">
+                    <div class="main">
+                        <div ng-view></div>
+                        <!-- <input type="hidden" id="lgnUser" value="77"> -->
+                        <input type="hidden" id="lgnUser" value="[[ user.idUsuario ]]">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /st-container -->
+    <!--Interface de usuario-->
+    <script src="js/toastr.min.js"></script>
+    <!-- Librerias Angular-->
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-animate.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
+    <script src="js/ui-bootstrap-tpls-1.3.1.js"></script>
+    <script src="js/angular-local-storage.min.js"></script>
+    <script src="js/angular-touch.js"></script>
+    <script src="js/ui-grid.js"></script>
+    <script type="text/javascript" src="js/dataTable/datatables.min.js"></script>
+    <script src="js/menu.js"></script>
+    <!--Funciones Comunes-->
+    <script src="confront.js"></script>
+    <!--order and selected-->
+    <script src="js/sortable.js"></script>
+    <script src="js/ui.sortable.multiselection.js"></script>
+    <!--Angular Busy-->
+    <script src="js/angular-busy.js"></script>
+    <!--Librería para realizar querys-->
+    <script src="js/linq.js"></script>
+    <!--Librerias de aplicación angular-->
+    <script src="AngularJS/RegistrationModule.js"></script>
+    <!--librerias de componenetes-->
+    <script src="AngularJS/alertFactory.js"></script>
+    <!-- directiva tablas -->
+    <script src="AngularJS/globalFactory.js"></script>
+    <!--Quitar-->
+    <script src="helpers.js"></script>
+    <script src="AngularJS/utils.js"></script>
+    <!--Controllers-->
+    <script src="AngularJS/Main/mainController.js"></script>
+    <script src="AngularJS/Main/mainRepository.js"></script>
+    <script src="AngularJS/crearLote/crearLoteController.js"></script>
+    <script src="AngularJS/crearLote/crearLoteRepository.js"></script>
+    <script src="AngularJS/consultaLote/consultaLoteController.js"></script>
+    <script src="AngularJS/consultaLote/consultaLoteRepository.js"></script>
+    <!-- <script src="AngularJS/AdministradorLotes/lotesadminRepository.js"></script>
+    <script src="AngularJS/AdministradorLotes/lotesadminController.js"></script>
+    <script src="AngularJS/Empleado/empleadoRepository.js"></script>
+    <script src="AngularJS/Empleado/empleadoController.js"></script>
+    <script src="AngularJS/Pago/pagoRepository.js"></script>
+    <script src="AngularJS/Pago/pagoController.js"></script>
+    <script src="AngularJS/Pago/pagoNodeRepository.js"></script>
+    <script src="AngularJS/Pago/gridModalController.js"></script>
+    <script src="AngularJS/Transferencia/transferenciaRepository.js"></script>
+    <script src="AngularJS/Transferencia/transferenciaController.js"></script>
+    <script src="AngularJS/CuentasProveedor/CuentasProveedorRepository.js"></script>
+    <script src="AngularJS/CuentasProveedor/CuentasProveedorController.js"></script>
+    <script src="AngularJS/Unificacion/unificacionDirective.js"></script>
+    <script src="AngularJS/Unificacion/unificacionRepository.js"></script>
+    <script src="AngularJS/Unificacion/unificacionController.js"></script>
+    <script src="AngularJS/AdministracionCartera/admonCarteraDirective.js"></script>
+    <script src="AngularJS/AdministracionCartera/admonCarteraRepository.js"></script>
+    <script src="AngularJS/AdministracionCartera/admonCarteraController.js"></script> -->
+    <!--Sidebars-->
+    <script src="js/sidebar/classie.js"></script>
+    <script src="js/sidebar/sidebarEffects.js"></script>
+    <script src="common.js"></script>
+    <script src="js/menu/classie.js"></script>
+</body>
+
+</html>

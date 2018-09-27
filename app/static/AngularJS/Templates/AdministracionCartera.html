@@ -1,0 +1,128 @@
+<link rel="stylesheet" href="css/admonCartera.css">
+<div ng-controller="admonCarteraController" ng-init="init()">
+    <div class="row">
+        <h4 class="space-bottom">Administración de Cartera </h4>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label>Empresa</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model='empresa.emp_nombre' aria-label="...">
+                    <div class="input-group-btn">
+                        <button id="btnTotalxEmpresa" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo cartera..." autocomplete="off">Seleccione <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li ng-repeat="empresa in empresas">
+                                <a href="#" ng-click="empresaSeleccion(empresa)">{{empresa.emp_nombre}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="form-group">
+                <label for="exampleInputEmail2">Proveedor</label>
+                <div class="input-group">
+                    <button type="submit" class="btn btn-primary" ng-click="modalBusqueda()">Buscar Proveedor</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row margin-right" ng-show="cliente">
+        <h4>Datos del Proveedor</h4>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="exampleInputName2">Id Proveedor: </label>
+                <span>{{cliente.idProveedor}}</span>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="exampleInputName2">Nombre: </label>
+                <span>{{cliente.Nombre}}</span>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="exampleInputName2">RFC: </label>
+                <span>{{cliente.RFC}}</span>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary pull-right" ng-click="buscaCartera()" ng-show="empresa">Buscar Cartera</button>
+        </div>
+    </div>
+    <div class="row space-top margin-right" ng-show="carteras">
+        <div class="col-sm-12">
+            <label class="containerCheck ">Cartera vencida
+                <input type="checkbox" ng-click="buscaCarteraVencida()" ng-model="carteraVencida">
+                <span class="checkmark"></span>
+            </label>
+            <label class="containerCheck text-cartera">Seleccionar todo
+                <input type="checkbox" ng-click="SeleccionarTodo()" ng-model="seleccionarTodo">
+                <span class="checkmark"></span>
+            </label>
+            <label class="containerR" id="selecionS">Mostrar sólo seleccionados
+                <input type="radio" name="radio">
+                <span class="checkmarkR"></span>
+            </label>
+            <label class="containerR" id="selecionT">Mostrar todos
+                <input type="radio" name="radio">
+                <span class="checkmarkR"></span>
+            </label>
+        </div>
+        <div class="col-sm-12">
+            <div class="table-responsive">
+                <table id="carteras" class="table table-hover" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Id Cartera</th>
+                            <th>Empresa</th>
+                            <th>Documento</th>
+                            <th>Tipo Documento</th>
+                            <th>Cartera</th>
+                            <th>Monto</th>
+                            <th>Saldo</th>
+                            <th>Fecha Vencimiento</th>
+                            <th>Fecha Promesa Pago</th>
+                            <th>Fecha Factura</th>
+                            <th>Año Poliza</th>
+                            <!--  <th class="text-center">Seleccionar
+                            <input type="checkbox" ng-click="SeleccionarTodo()" ng-model="seleccionarTodo">
+                        </th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="cartera in carteras" ng-class="{'selected': cartera.seleccionada == true, 'unSelect': cartera.unSelect == true}" ng-click="select(cartera)">
+                            <td>{{cartera.pbp_consCartera}}</td>
+                            <td>{{cartera.Empresa}}</td>
+                            <td>{{cartera.pbp_documento}}</td>
+                            <td>{{cartera.pbp_tipoDocto}}</td>
+                            <td>{{cartera.pbp_cartera}}</td>
+                            <td>{{cartera.pbp_monto | currency}}</td>
+                            <td>{{cartera.pbp_saldo | currency}}</td>
+                            <td>{{cartera.pbp_fechaVencimiento}}</td>
+                            <td>{{cartera.pbp_fechaPromesaPago}}</td>
+                            <td>{{cartera.pbp_fechaFactura}}</td>
+                            <td>{{cartera.pbp_polAnnio}}</td>
+                            <!--  <td class="text-center">
+                            <input type="checkbox" ng-model="cartera.seleccionada">
+                        </td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row space-top margin-right" ng-show="carteras">
+        <div class="col-sm-offset-8 col-sm-4">
+            <label>Seleccione Fecha Promesa de Pago</label>
+            <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="fechaPromesa" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+                <button type="submit" class="btn btn-primary pull-right" ng-click="MostrarMensaje()" ng-disabled="!fechaPromesa">Cambiar Fecha</button>
+            </p>
+        </div>
+    </div>
+</div>

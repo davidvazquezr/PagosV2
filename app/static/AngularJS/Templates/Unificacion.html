@@ -1,0 +1,81 @@
+<link rel="stylesheet" href="css/unificacion.css">
+<div ng-controller="unificacionController" ng-init="init()">
+	<h4 class="space-bottom">Unificación de Cuentas Bancarias </h4>
+    <h5 class="space-bottom">Búsqueda de Proveedor</h5>
+    <form class="form-inline">
+        <input type="text" class="form-control" placeholder="Id" ng-model="id" ng-disabled="rfc || nombre">
+        <input type="text" class="form-control" placeholder="Nombre" ng-model="nombre" ng-disabled="id || rfc">
+        <input type="text" class="form-control" placeholder="Rfc" ng-model="rfc" ng-disabled="id || nombre">
+        <button type="submit" class="btn btn-danger" ng-click="limpiaBusqueda()"><i class="glyphicon glyphicon-erase"></i></button>
+        <button type="submit" class="btn btn-primary" ng-click="busqueda()"><i class="glyphicon glyphicon-search"></i></button>
+        <div class="dropdown-content myDropdown" ng-show="clientes">
+            <div class="lds-ripple" ng-show="muestraLoading">
+                <div></div>
+                <div></div>
+            </div>
+            <a ng-repeat="cliente in clientes" ng-click="obtieneCuentas(cliente)">
+                <div class="row">
+                    <div class="col-sm-4 ">{{cliente.idProveedor}}</div>
+                    <div class="col-sm-4 ">{{cliente.Nombre}}</div>
+                    <div class="col-sm-4 ">{{cliente.RFC}}</div>
+                </div>
+            </a>
+        </div>
+    </form>
+    <div class="row space-top " ng-show="cliente ">
+        <div class="col-sm-1 ">
+            <strong>Id: </strong>{{cliente.idProveedor}}
+        </div>
+        <div class="col-sm-4 ">
+            <strong>Nombre: </strong>{{cliente.Nombre}}
+        </div>
+        <div class="col-sm-7 ">
+            <strong>RFC: </strong>{{cliente.RFC}}
+        </div>
+    </div>
+    <div class="row space-top" ng-show="cuentas">
+        <div class="col-sm-11">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Empresa</th>
+                            <th>Banco</th>
+                            <th>Número de Cuenta</th>
+                            <th>CLABE</th>
+                            <th>Convenio</th>
+                            <th>Autorizada</th>
+                            <th>Seleccionar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="cuenta in cuentas" ng-class="{ 'red': cuenta.BCO_AUTORIZADA == 0}" id="radio-{{cuenta.BCO_NUMCUENTA}}">
+                            <td>{{cuenta.nombreEmpresa}}</td>
+                            <td>{{cuenta.BCO_BANCO}}</td>
+                            <td>{{cuenta.BCO_NUMCUENTA}}</td>
+                            <td>{{cuenta.BCO_CLABE}}</td>
+                            <td>{{cuenta.BCO_CONVENIOCIE}}</td>
+                            <td>{{cuenta.BCO_AUTORIZADA == 1 ? 'Sí' : 'No'}}</td>
+                            <td>
+                                <div class="radio" ng-if="cuenta.BCO_AUTORIZADA != 0">
+                                    <label>
+                                        <!-- <input type="radio" ng-model="$parent.selected" ng-value="cuenta"> -->
+                                        <input type="radio" name="radius" ng-checked="cuenta.checked" ng-change="cuentaSeleccionada(cuenta)" ng-model="selectedValue.price" value="{{cuenta.BCO_NUMCUENTA}}">
+                                    </label>
+                                </div>
+                                <!-- <button type="button" class="btn btn-success" ng-click="verificaCuenta(cuenta)" ng-if="cuenta.BCO_AUTORIZADA != 0"><i class="glyphicon glyphicon-ok"></i></button> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                	<div class="alert alert-danger" role="alert" ng-show="alertDanger">{{mensaje}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-11">
+        	<button type="button" class="btn btn-success pull-right" ng-click="verificaCuenta()" ng-if="cuentaSel"><i class="glyphicon glyphicon-indent-right"> Unificar</i></button>
+        </div>
+    </div>
+</div>
+

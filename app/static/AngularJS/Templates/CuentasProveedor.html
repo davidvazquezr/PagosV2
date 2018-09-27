@@ -1,0 +1,25 @@
+<link href="../../css/agrupador.css" rel="stylesheet" />
+
+<div cg-busy="myPromise" ng-init="init()" resize>
+
+ <div ng-controller="CuentasProveedorController" class="container">
+
+        <h2>Agrupamiento de proveedores vs cuentas </h2>
+        
+        <br>
+        <div class="floatleft">
+
+            <div ng-repeat="cuenta in cuentas" class="screen floatleft">
+                <div ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="cuenta.lista">{{cuenta.cuenta}}
+                    <div ui-sortable-selectable class="app" ng-repeat="item in cuenta.lista track by item.value" >{{item.text}}</div>
+                </div>
+            </div>
+
+            <div style="clear: both;">
+                     <button class="btn btn-info" data-toggle="modal" href="#stack2" ng-click="Guardar()">Guardar</button>
+            </div>
+
+        </div>
+        
+        <div class="clear"></div>
+</div></div>

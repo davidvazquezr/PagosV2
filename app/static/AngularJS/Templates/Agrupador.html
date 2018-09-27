@@ -1,0 +1,29 @@
+<link href="../../css/agrupador.css" rel="stylesheet" />
+<div cg-busy="myPromise" ng-init="init()" resize>
+    <div ng-controller="agrupadorController" class="container">
+        <h2>Agrupamiento y orden de provedores</h2>
+       
+
+        <div id="selEmpresa">
+                        <div id="selEmpresaLabel">
+                            <span id="spanEmpresaLabel"> Seleccione la empresa</span>
+                        </div>
+                        <div id="selEmpresaCombo">
+                            <div class="input-group">
+                                <input type="text" class="form-control" ng-model='traeTotalxEmpresa.emp_nombre' aria-label="...">
+                                <div class="input-group-btn">
+                                    <button id="btnTotalxEmpresa" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo cartera..." autocomplete="off">Seleccione <span class="caret"></span></button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li ng-repeat="empresa in empresas">
+                                            <a href="#" ng-click="traeTotalxEmpresa(empresa.emp_idempresa, empresa.emp_nombre,empresa.emp_nombrecto,empresa.rfc, empresa.tipo, empresa.pagoDirecto)">{{empresa.emp_nombre}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- /btn-group -->
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

@@ -1,0 +1,1 @@
+registrationModule.controller("empleadoController",function(o,e,n,a,t,d){o.idEmpleado=1,o.init=function(){d.getFichaEmpleado(o.idEmpleado).then(function e(n){o.empleado=n.data,t.success("Datos de empleado obtenidos.")},function n(o){t.error("Error al obtener los datos de empleado.")})},o.Salir=function(){t.info("has salido")}});

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> 
+<html class="no-js" lang="es"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Libreria de Google Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900italic' rel='stylesheet' type='text/css'>
+
+  <!--Hojas de estilos-->
+  <link href="css/bootstrap.css" rel="stylesheet" />
+  <link href="css/bootstrap-switch.css" rel="stylesheet" />
+  <link href="css/main.css" rel="stylesheet" />
+  <link href="css/search.css" rel="stylesheet" />
+  <link href="css/nodo.css" rel="stylesheet" />
+
+  <!--Loading-->
+  <link href="css/toastr.css" rel="stylesheet" />
+  <link href="css/angular-busy.css" rel="stylesheet" />
+
+  <!--Librearias JQuery y Bootstrap-->
+  <script src="js/jquery-2.1.4.min.js"></script>
+  <!--Agrego FAL 24022016 para la funcion de order y selected-->
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/bootstrap-switch.js"></script>
+
+  <!-- Sidebar -->
+  <link rel="stylesheet" type="text/css" href="css/sidebar/normalize.css" />
+  <link rel="stylesheet" type="text/css" href="css/sidebar/component.css" />
+  <link rel="stylesheet" type="text/css" href="css/sidebar/body.css" />
+  <link rel="stylesheet" type="text/css" href="css/ui-grid.css" />
+  <link rel="stylesheet" type="text/css" href="css/sidetools/component.css" />
+  <script src="js/sidebar/modernizr.custom.js"></script>
+
+  <base href='/'>
+</head>
+<body ng-app="registrationModule">
+<!-- Contenedor de información -->
+<div id="st-container">
+  <!-- content push wrapper -->
+  <div class="st-pusher">
+    <nav class="st-menu st-effect-3" id="menu-3">
+      <h2 class="icon h2extends"><span class="glyphicon glyphicon-home headSearch" aria-hidden="true"></span>Menú</h2>
+      <ul>
+        <li>
+          <div class="labely" href="#"></div>
+          <input type="text" class="form-control" ng-model="folioBusca" >
+        </li>
+        <button type="button" class="btn btn-default btnSearch" id="closeMenu" ><span class="glyphicon glyphicon-remove " aria-hidden="true"></span> Cancelar</button>
+      </ul>
+    </nav>
+    <div id="st-trigger-effects" class="column">
+      <nav class="navbar navbar-default navHeader"> <!-- Inicia NAV bar -->
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header actionMenu">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Navegador</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <button class="navbar-brand" id="slide" data-effect="st-effect-3">
+              <span class="glyphicon glyphicon-th blanco" id="menu" aria-hidden="true"></span>
+            </button> 
+            <a class="navbar-brand" href="#"><span class="blanco">Programación de pagos</span></a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="empleadoController" ng-init="init()">
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown" id="mnuAvatar">
+                <a id="mnuUser" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <span class="blanco" >{{ empleado.nombre }}</span>  
+                  <img src="image/profile/man.jpg" id="avatar">
+                  <span class="caret blanco" id="nombreEmpleado"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="seleccionable"><a ng-click="Salir()">Salir</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+
+        </div><!-- /.container-fluid -->
+      </nav>
+      <div class="container">
+        <ul class="cbp-vimenu">
+          <li><a href="#" class="icon-logo" >Logo</a></li>
+          <li><a href="#" class="icon-logo1" tooltip="nuevo lote">Archive</a></li>
+          <li><a href="#" class="icon-search">Search</a></li>
+          <li><a href="#" class="icon-pencil">Pencil</a></li>
+          <!-- Example for active item:
+          <li class="cbp-vicurrent"><a href="#" class="icon-pencil">Pencil</a></li>
+          -->
+          <li><a href="#" class="icon-location">Location</a></li>
+          <li><a href="#" class="icon-images">Images</a></li>
+          <li><a href="#" class="icon-download">Download</a></li>
+        </ul>
+        <div class="main">
+          <div ng-view></div>
+        </div>
+    </div>
+      
+    </div>
+
+  </div><!-- /st-pusher -->
+</div><!-- /st-container -->
+
+  <!--Modal de inicio FAL-->
+  <div id="inicioModal" class="modal fade" tabindex="-1" data-focus-on="input:first" ng-controller="pagoController" ng-init="traeEmpresas()"  data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+         <h4 class="modal-title" id="memberModalLabel">Crear un nuevo lote</h4>
+         <div id="selEmpresa"> 
+          <div id="selEmpresaLabel">
+           <span id="spanEmpresaLabel"> Seleccione la empresa</span>
+         </div>
+         <div id="selEmpresaCombo">
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model='traeTotalxEmpresa.emp_nombre' aria-label="...">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccione <span class="caret"></span></button>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li ng-repeat="empresa in empresas">
+                  <a href="#" ng-click="traeTotalxEmpresa(empresa.emp_idempresa, empresa.emp_nombre)">{{empresa.emp_nombre}}</a>
+                </li>
+              </ul>
+            </div><!-- /btn-group -->
+          </div><!-- /input-group --> 
+        </div>
+      </div>
+    </div>
+    <div class="modal-body" ng-if="showTotales">
+      <div class="mdPagarLabel">
+        Totales a Pagar por bancos
+      </div>
+      <div id="mdContentSuma">
+        <div class="mdLineSuma" ng-repeat="TotalxEmpresa in TotalxEmpresas">
+          <div class="sumTexto">
+            {{TotalxEmpresa.cuentaPagadora}}
+          </div>
+          <div class="sumMonto">
+            {{TotalxEmpresa.sumaSaldo | currency}}
+          </div>
+        </div>
+        <div class="rows"> <div class="raya"></div></div>
+        <div class="rows">
+          <div class="sumTexto">
+            Total a pagar
+          </div>
+          <div class="sumMonto montoFinal">
+            {{GranTotal | currency}}
+          </div>
+        </div>
+      </div>        
+      <div class="panel" ng-if="showSelCartera">
+        <div>
+          <div class="mdPagarLabel">
+            ¿Que contenido tendrá el nuevo lote?
+          </div>
+          <div id="mdRadio">
+           <div class="btn-group" role="group" >
+            <button type="button" class="btn btn-primary"  ng-click="OcultaGridModal(false)">Con toda la cartera</button>
+            <button type="button" class="btn btn-primary"  ng-click="MuestraGridModal(true)">Seleccionar cartera</button>
+          </div>
+        </div>
+      </div>
+      <div ng-if="showGrid">
+        <div class="mdPagarLabel">
+          Seleccione los registros
+        </div>
+        <div id="contenedorGrid">
+          
+         <div id="grid1" ui-grid="gridOptions" ui-grid-grouping ui-grid-edit ui-grid-selection ui-grid-cellNav class="gridStyle"></div>
+         
+       </div>
+     </div>  
+     <!-- Totales a pagar por bancos -->
+   </div>
+   <div class="modal-footer">
+     <button class="btn btn-info" data-toggle="modal" href="#stack2" ng-click="IniciaLote()" ng-hide="noLotes.data.length > 0">Crear Lote</button>
+     <button type="button" class="btn btn-primary" data-dismiss="modal" ng-hide="noLotes.data.length == 0">Ir a Programación Pago</button></div>
+   </div>
+ </div>
+</div>
+</div>
+<!--Fin odal de inicio FAL-->
+
+<!--Interface de usuario-->
+<script src="js/toastr.min.js"></script>
+
+<!-- Librerias Angular-->
+<script src="js/angular.min.js"></script>
+<script src="js/angular-animate.min.js"></script>
+<script src="js/angular-route.min.js"></script>
+<script src="js/angular-ui/ui-bootstrap-tpls.min.js"></script>
+<script src="js/angular-local-storage.min.js"></script>
+<script src="js/angular-touch.js"></script>
+<script src="js/ui-grid.js"></script>
+<!--Funciones Comunes-->
+<script src="confront.js"></script>
+
+<!--order and selected-->
+<script src="js/sortable.js"></script>
+<script src="js/ui.sortable.multiselection.js"></script>
+
+<!--Angular Busy-->
+<script src="js/angular-busy.js"></script>
+
+<!--Librería para realizar querys-->
+<script src="js/linq.js"></script>
+
+<!--Librerias de aplicación angular-->
+<script src="AngularJS/RegistrationModule.js"></script>
+
+<!--librerias de componenetes-->
+<script src="AngularJS/alertFactory.js"></script>
+
+<!--Quitar-->
+<script src="helpers.js"></script>
+
+<!--Controllers-->
+<script src="AngularJS/Empleado/empleadoRepository.js"></script>
+<script src="AngularJS/Empleado/empleadoController.js"></script>
+<script src="AngularJS/Pago/pagoRepository.js"></script>
+<script src="AngularJS/Pago/pagoController.js"></script>
+<script src="AngularJS/Agrupador/agrupadorRepository.js"></script>
+<script src="AngularJS/Agrupador/agrupadorController.js"></script>
+<!--Sidebars-->
+<script src="js/sidebar/classie.js"></script>
+<script src="js/sidebar/sidebarEffects.js"></script>
+
+</body>
+</html>
