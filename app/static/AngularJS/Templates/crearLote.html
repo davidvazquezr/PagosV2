@@ -45,8 +45,13 @@
     </div>
     <div class="row">
     	<button class="btn btn-primary pull-right">HOLA</button>
-    	<div>HOLA <input type="text" ng-model="idEmpresa.idEmpresa"></div>
-    	<div flujo-efectivo-directive customer="idEmpresa"></div>
+    	<div>HOLA <input type="text" ng-model="datosEmpresa.idEmpresa"></div>
+    	<div flujo-efectivo-directive customer="datosEmpresa"></div>
     </div>
-    
+    <div class="row">
+    	<div cartera-vencer-directive customer="datosEmpresa"></div>
+    </div>
+    <div class="row">
+    	<div cartera-rojo-directive customer="datosEmpresa"></div>
+    </div>    
 </div>
