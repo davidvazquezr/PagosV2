@@ -13,7 +13,7 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
     $scope.empresaSeleccion = function(empresa) {
         $rootScope.empresa = empresa;
         $scope.buscarLotes = true;
-    }
+    };
 
     $scope.BuscarLotes = function() {
 
@@ -21,8 +21,6 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
             enableRowSelection: true,
             enableRowHeaderSelection: true
         };
-
-
 
         $rootScope.gridLotesoptions.columnDefs = [
             { name: 'idLotePago', displayName: 'Lote', width: '5%', enableCellEdit: false, visible: true },
@@ -37,8 +35,6 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
             { name: 'Borrar', displayName: 'Borrar', width: '5%', cellTemplate: '<div ng-show="(row.entity.estatus==1)||(row.entity.estatus==2)"><button class="btn btn-danger" ><span class="glyphicon glyphicon-trash" ng-click="grid.appScope.borraLoteBtn(row.entity)"></span></button></div>' },
             { name: 'Libera', displayName: 'Libera', width: '5%', cellTemplate: '<div ng-show="((row.entity.numdetalle - row.entity.numaplicado)>0)"><button class="btn btn-success" ><span class="glyphicon glyphicon-download-alt" ng-click="grid.appScope.modalLibera(row.entity.idLotePago)"></span></button></div>' },
         ];
-
-
 
         $rootScope.gridLotesoptions.multiSelect = false;
         $rootScope.gridLotesoptions.modifierKeysToMultiSelect = false;

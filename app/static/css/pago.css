@@ -1,6 +1,7 @@
 @charset "UTF-8";
 #contentManager {
     margin-left: 50px;
+    margin-right: 50px;
 }
 
 #container {
@@ -338,7 +339,7 @@ grid .panelEncabezado {
 
 .sumTexto {
     display: inline-block;
-    width: 50%;
+    width: 79%;
     text-align: right;
     font-weight: 600;
     font-size: 15px;
@@ -347,7 +348,7 @@ grid .panelEncabezado {
 
 .sumMonto {
     display: inline-block;
-    width: 49%;
+    width: 20%;
     text-align: right;
     font-size: 15px;
     font-weight: 300;
@@ -849,3 +850,17 @@ grid .panelEncabezado {
   
 }
 /*------*/
+.mt-label{
+    margin-top: 24px;
+}
+.puntero{
+    cursor: pointer;
+}
+.text-total{
+    font-size: 30px;
+}
+.text-titulo{
+    font-size: 15px;
+    padding-top: 18px;
+    font-weight: 600;
+}
