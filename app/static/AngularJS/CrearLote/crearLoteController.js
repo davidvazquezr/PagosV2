@@ -1,18 +1,19 @@
 registrationModule.controller('crearLoteController', function($scope, $rootScope, alertFactory, crearLoteRepository) {
 	openCloseNav();
     $scope.init = function() {
-        console.log('Logre entrar al Crear Lote :D')        
-        $scope.idEmpresa = {
-	        idEmpresa: 0
+        console.log('Logre entrar al Crear Lote :D')  
+        var idLote = getParameterByName('idLote');
+        console.log('Soy el lote', idLote)      
+        $scope.datosEmpresa = {
+	        idEmpresa: 0,
+	        idLote: idLote
 	    };
         
     };
     $scope.empresaSeleccion = function(empresa) {
     	limpiaVariables();
         $rootScope.empresa = empresa;
-        $scope.idEmpresa = {
-	        idEmpresa: empresa.emp_idempresa
-	    };
+        $scope.datosEmpresa.idEmpresa = empresa.emp_idempresa
 	    obtenerEgresos(empresa.emp_idempresa);
 	    traeBancosCompleta(empresa.emp_idempresa);
     };
