@@ -1,15 +1,17 @@
 <div ng-controller="empresasController" ng-init="init()">
     <div class="form-group">
         <label>Seleccione la empresa</label>
-        <div class="input-group">
-            <input type="text" class="form-control" ng-model='empresa.emp_nombre' aria-label="...">
-            <div class="input-group-btn">
-                <button id="btnTotalxEmpresa" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo cartera..." autocomplete="off">Seleccione <span class="caret"></span></button>
-                <ul class="dropdown-menu dropdown-menu-right">
-                    <li ng-repeat="empresa in empresas">
-                        <a href="#" ng-click="empresaSeleccion(empresa)">{{empresa.emp_nombre}}</a>
-                    </li>
-                </ul>
+        <div >
+            <div class="input-group col-sm-9">
+                <input type="text" class="form-control" ng-model='empresa.emp_nombre' aria-label="...">
+                <div class="input-group-btn">
+                    <button id="btnTotalxEmpresa" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo cartera..." autocomplete="off">Seleccione <span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li ng-repeat="empresa in empresas">
+                            <a href="#" ng-click="empresaSeleccion(empresa)">{{empresa.emp_nombre}}</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
