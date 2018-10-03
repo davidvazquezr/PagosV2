@@ -1,7 +1,7 @@
 <div cg-busy="myPromise" ng-init="init()" id="contentManager">
     <h4 class="space-bottom">Consulta de Lotes</h4>
     <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-12">
             <empresas></empresas>
         </div>
     </div>
@@ -10,5 +10,41 @@
     </div>
     <div class="rows">
         <div ui-grid="gridLotesoptions" ui-grid-selection class="gridlotes"></div>
+    </div>
+    <div id="modallibera" class="modal fade" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="memberModalLabel">Documentos a liberar del lote {{idloteliberar}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Provedor</th>
+                                    <th>Documento</th>
+                                    <th>Saldo</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="liberar in liberarcxp">
+                                    <td>{{liberar.proveedor}}</td>
+                                    <td>{{liberar.documento}}</td>
+                                    <td>{{liberar.saldo}}</td>
+                                    <td>
+                                        <button id="btnAprobar" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="liberarlote(idloteliberar,liberar.documento)" data-loading-text="Aprobando..." autocomplete="off">Liberar documento</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                salir
+            </div>
+        </div>
     </div>
 </div>

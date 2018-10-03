@@ -1,4 +1,4 @@
-var consultaLoteUrl = global_settings.urlNode + 'main/';
+var consultaLoteUrl = global_settings.urlNode + 'consultaLote/';
 
 registrationModule.factory('consultaLoteRepository', function($http) {
     return {
@@ -8,6 +8,18 @@ registrationModule.factory('consultaLoteRepository', function($http) {
                 method: "GET",
                 params: {
                     idUsuario: idUsuario
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+          getliberar: function(idLote) {
+            return $http({
+                url: consultaLoteUrl + 'liberarDocs/',
+                method: "GET",
+                params: {
+                    idLote: idLote
                 },
                 headers: {
                     'Content-Type': 'application/json'

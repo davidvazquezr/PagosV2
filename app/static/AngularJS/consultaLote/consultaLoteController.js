@@ -1,4 +1,4 @@
-registrationModule.controller('consultaLoteController', function($scope, $rootScope, alertFactory, crearLoteRepository,monitorRepository) {
+registrationModule.controller('consultaLoteController', function($scope, $rootScope, alertFactory, consultaLoteRepository,monitorRepository) {
     openCloseNav();
 
     $rootScope.empresa = "";
@@ -15,14 +15,20 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
         $scope.buscarLotes = true;
     }
 
+
+
+     $scope.ConsultaLoteObtieneBusqueda = function(Lote, index, esAplicacionDirecta) {
+        console.log('Lote____________')
+        console.log(Lote)
+
+     };
+
     $scope.BuscarLotes = function() {
 
         $rootScope.gridLotesoptions = {
             enableRowSelection: true,
             enableRowHeaderSelection: true
         };
-
-
 
         $rootScope.gridLotesoptions.columnDefs = [
             { name: 'idLotePago', displayName: 'Lote', width: '5%', enableCellEdit: false, visible: true },
@@ -35,7 +41,7 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
             { name: 'buscar', displayName: 'Buscar', width: '5%', cellTemplate: '<div><button class="btn btn-warning" ><span class="glyphicon glyphicon-search" ng-click="grid.appScope.ConsultaLoteObtieneBusqueda(row.entity,0,0)"></span></button></div>' },
             { name: 'Aplicar', displayName: 'Aplicar', width: '5%', cellTemplate: '<div ng-show="(row.entity.estatus==3) && (row.entity.idTipoPago == 2)"><button class="btn btn-info" ><span class="glyphicon glyphicon-floppy-saved" ng-click="grid.appScope.ConsultaLoteObtieneBusquedaAplicaDirecto(row.entity,0,0)"></span></button></div>' },
             { name: 'Borrar', displayName: 'Borrar', width: '5%', cellTemplate: '<div ng-show="(row.entity.estatus==1)||(row.entity.estatus==2)"><button class="btn btn-danger" ><span class="glyphicon glyphicon-trash" ng-click="grid.appScope.borraLoteBtn(row.entity)"></span></button></div>' },
-            { name: 'Libera', displayName: 'Libera', width: '5%', cellTemplate: '<div ng-show="((row.entity.numdetalle - row.entity.numaplicado)>0)"><button class="btn btn-success" ><span class="glyphicon glyphicon-download-alt" ng-click="grid.appScope.modalLibera(row.entity.idLotePago)"></span></button></div>' },
+            { name: 'Libera', displayName: 'Libera', width: '5%', cellTemplate: '<div ng-show="((row.entity.numdetalle - row.entity.numaplicado)>0)" ng-click="grid.appScope.modalLibera(row.entity.idLotePago)"><button class="btn btn-success" ><span class="glyphicon glyphicon-download-alt"></span></button></div>' },
         ];
 
 
@@ -55,7 +61,7 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
         var fecha_ini = $scope.formatDate(fechaini);
         var fecha_fin = $scope.formatDate(fechafin);
 
-        monitorRepository.getLotesxFecha($rootScope.empresa.emp_idempresa, 77, fecha_ini, fecha_fin, 3)
+        monitorRepository.getLotesxFecha($rootScope.empresa.emp_idempresa, 77, fecha_ini, fecha_fin, 0)
             .then(function successCallback(response) {
                 if (response.data.length == 0)
                     alertFactory.infoTopFull('No existen lotes para este rango de fechas');
@@ -66,6 +72,19 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
                 alertFactory.error('Error al obtener los datos del encabezado.');
             });
     }
+
+
+    $scope.modalLibera = function(idLote) {
+        $('#modallibera').insertAfter($('body'));
+        $('#modallibera').modal('show');
+        consultaLoteRepository.getliberar(idLote)
+            .then(function successCallback(response) {
+                 $rootScope.liberarcxp = response.data;
+                $rootScope.idloteliberar = idLote;
+            }, function errorCallback(response) {
+                alertFactory.error('Los documentos estan aplicados.');
+            });
+    };
 
     
     $scope.formatDate = function(date) {

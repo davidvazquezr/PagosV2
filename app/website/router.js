@@ -4,5 +4,6 @@
  	admonCartera: require('./controllers/admonCartera'),
  	pago: require('./controllers/pago'),
  	empresas: require('./controllers/empresas'),
- 	monitor: require('./controllers/monitor')
+ 	monitor: require('./controllers/monitor'),
+ 	consultaLote: require('./controllers/consultaLote')
  }
