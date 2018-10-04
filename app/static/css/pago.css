@@ -664,8 +664,6 @@ grid .panelEncabezado {
 
 #nombreLote {
     font-size: 23px;
-    padding-left: 3%;
-    margin-top: -20px;
     font-weight: 100;
 }
 
@@ -863,4 +861,7 @@ grid .panelEncabezado {
     font-size: 15px;
     padding-top: 18px;
     font-weight: 600;
+}
+.m-t{
+    margin-top: 12px;
 }

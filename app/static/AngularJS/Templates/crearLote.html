@@ -1,57 +1,122 @@
 <div cg-busy="myPromise" ng-init="init()" id="contentManager">
-	<div class="row text-center">
-		<h4 class="modal-title" id="memberModalLabel">Crear un nuevo lote</h4>
-	</div>
-	<div class="row">
-        <div class="col-sm-6">
-            <empresas></empresas>
+    <div ng-hide="editar">
+        <div class="row text-center">
+            <h4 class="modal-title" id="memberModalLabel">Crear un nuevo lote</h4>
         </div>
-        <div class="col-sm-6">
-			<div class="input-group mt-label">
-                <input type="text" class="form-control" readonly="true" ng-model='bancoPago.cuenta' aria-label="...">
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        <li ng-repeat="egreso in egresos" class="puntero">
-                            <a class="egresosCombo" ng-click='selBancoPago(egreso)'>
+        <div class="row">
+            <div class="col-sm-6">
+                <empresas></empresas>
+            </div>
+            <div class="col-sm-6">
+                <div class="input-group mt-label">
+                    <input type="text" class="form-control" readonly="true" ng-model='bancoPago.cuenta' aria-label="...">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li ng-repeat="egreso in egresos" class="puntero">
+                                <a class="egresosCombo" ng-click='selBancoPago(egreso)'>
                                 {{egreso.cuenta}}
                             </a>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row m-t">
+            <div class="btn-group col-sm-8">
+                <button class="btn btn-primary" ng-model="radioTotales" ng-click="tipoTotal = 'Total cartera'">Todo</button>
+                <button class="btn btn-primary" ng-model="radioTotales" ng-click="tipoTotal = 'Total pagable'">Pagable</button>
+                <button class="btn btn-primary" ng-model="radioTotales" ng-click="tipoTotal = 'Total no pagable'">No Pagable</button>
+            </div>
+            <div class="col-sm-2 text-right text-titulo">
+                {{tipoTotal}}
+            </div>
+            <div class="col-sm-2 text-right text-total">
+                {{ tipoTotal == 'Total cartera' ? GranTotalaPagar : tipoTotal == 'Total pagable' ? GranTotalPagable : GranTotalnoPagable | currency}}
+            </div>
+        </div>
+        <div class="row m-t">
+            <div class="form-group">
+                <span class="col-sm-4 text-right mdPagarLabel">Nombre del Lote</span>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="nombreLote">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="editar">
+        <div class="row">
+            <h1>{{ nombreEmpresa }}</h1>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div id="nombreLote">
+                    Lote: {{nombreLote}}
+                </div>
+            </div>
+            <div class="col-sm-3">
+                Cartera vencida al <span id="lblPagosblack"> {{ fechaHoy | date:'dd/MM/yyyy' }}</span>
+                <div class="btn-group">
+                    <button class="btn btn-primary" ng-model="radioTotales" ng-click="tipoTotal = 'Total cartera'">Todo</button>
+                    <button class="btn btn-primary" ng-model="radioTotales" ng-click="tipoTotal = 'Total pagable'">Pagable</button>
+                    <button class="btn btn-primary" ng-model="radioTotales" ng-click="tipoTotal = 'Total no pagable'">No Pagable</button>
+                </div>
+            </div>
+            <div class="col-sm-3">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <empresas></empresas>
+            </div>
+            <div class="col-sm-6">
+                <div class="input-group mt-label">
+                    <input type="text" class="form-control" readonly="true" ng-model='bancoPago.cuenta' aria-label="...">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li ng-repeat="egreso in egresos" class="puntero">
+                                <a class="egresosCombo" ng-click='selBancoPago(egreso)'>
+                                {{egreso.cuenta}}
+                            </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row m-t">
+            <div class="btn-group col-sm-8">
+                <button class="btn btn-primary" ng-model="radioTotales" ng-click="tipoTotal = 'Total cartera'">Todo</button>
+                <button class="btn btn-primary" ng-model="radioTotales" ng-click="tipoTotal = 'Total pagable'">Pagable</button>
+                <button class="btn btn-primary" ng-model="radioTotales" ng-click="tipoTotal = 'Total no pagable'">No Pagable</button>
+            </div>
+            <div class="col-sm-2 text-right text-titulo">
+                {{tipoTotal}}
+            </div>
+            <div class="col-sm-2 text-right text-total">
+                {{ tipoTotal == 'Total cartera' ? GranTotalaPagar : tipoTotal == 'Total pagable' ? GranTotalPagable : GranTotalnoPagable | currency}}
+            </div>
+        </div>
+        <div class="row m-t">
+            <div class="form-group">
+                <span class="col-sm-4 text-right mdPagarLabel">Nombre del Lote</span>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="nombreLote">
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-    	<div class="btn-group col-sm-8">
-            <button class="btn btn-primary" ng-model="radioTotales" ng-click="tipoTotal = 'Total cartera'">Todo</button>
-            <button class="btn btn-primary" ng-model="radioTotales" ng-click="tipoTotal = 'Total pagable'">Pagable</button>
-            <button class="btn btn-primary" ng-model="radioTotales" ng-click="tipoTotal = 'Total no pagable'">No Pagable</button>
-        </div>
-        <div class="col-sm-2 text-right text-titulo">
-        	{{tipoTotal}}			
-        </div>
-        <div class="col-sm-2 text-right text-total">
-        	{{ tipoTotal == 'Total cartera' ? GranTotalaPagar : tipoTotal == 'Total pagable' ? GranTotalPagable : GranTotalnoPagable | currency}}
-        </div>
+        <!-- <button class="btn btn-primary pull-right">HOLA</button> -->
+        <div>HOLA <input type="text" ng-model="datosEmpresa.idEmpresa"></div>
+        <div flujo-efectivo-directive customer="datosEmpresa"></div>
     </div>
     <div class="row">
-    	<div class="text-center">
-            Nombre del Lote
-            <div id="mdContentSuma">
-	            <input type="text" class="form-control" ng-model="formData.nombreLoteNuevo">
-	        </div>
-        </div>        
+        <div cartera-vencer-directive customer="datosEmpresa"></div>
     </div>
     <div class="row">
-    	<button class="btn btn-primary pull-right">HOLA</button>
-    	<div>HOLA <input type="text" ng-model="datosEmpresa.idEmpresa"></div>
-    	<div flujo-efectivo-directive customer="datosEmpresa"></div>
+        <div cartera-rojo-directive customer="datosEmpresa"></div>
     </div>
-    <div class="row">
-    	<div cartera-vencer-directive customer="datosEmpresa"></div>
-    </div>
-    <div class="row">
-    	<div cartera-rojo-directive customer="datosEmpresa"></div>
-    </div>    
 </div>

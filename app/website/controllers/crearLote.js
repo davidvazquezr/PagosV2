@@ -21,8 +21,7 @@ crearLote.prototype.get_egresos = function(req, res, next) {
 
     var self = this;
 
-    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }
-    ];
+    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }];
 
     this.model.query('SEL_EGRESOS_SP', params, function(error, result) {
         self.view.expositor(res, {
@@ -35,10 +34,25 @@ crearLote.prototype.get_bancosCompleta = function(req, res, next) {
 
     var self = this;
 
-    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }
-    ];
+    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }];
 
     this.model.query('SEL_TOTAL_BANCOS_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+crearLote.prototype.get_encabezadoLote = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT },
+        { name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT },
+        { name: 'idLote', value: req.query.idLote, type: self.model.types.INT }
+    ];
+
+    this.model.query('SEL_ENCABEZADO_LOTE_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result

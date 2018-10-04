@@ -25,6 +25,16 @@ registrationModule.factory('crearLoteRepository', function($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        obtieneEncabezadoLote: function(params) {
+            return $http({
+                url: crealLoteUrl + 'encabezadoLote/',
+                method: "GET",
+                params: params,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
