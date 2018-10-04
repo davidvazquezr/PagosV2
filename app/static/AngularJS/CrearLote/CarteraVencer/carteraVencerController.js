@@ -1,4 +1,4 @@
-registrationModule.controller('carteraVencerController', function($scope, $rootScope, alertFactory, crearLoteRepository) {
+registrationModule.controller('carteraVencerController', function($scope, $rootScope, alertFactory, carteraVencerRepository) {
 
     $scope.$watch("customer.idEmpresa", function(newValue, oldValue) {
         $scope.init();
@@ -9,7 +9,7 @@ registrationModule.controller('carteraVencerController', function($scope, $rootS
 
     $scope.init = function() {
         $scope.loteController = $scope.customer.idLote;
-        ConfiguraGridxvencer();
+       // ConfiguraGridxvencer();
 
 
     }
@@ -18,7 +18,7 @@ registrationModule.controller('carteraVencerController', function($scope, $rootS
         $scope.GranTotalxvencer = 0;
         $scope.GranTotalxvencerPagable = 0;
         $scope.GranTotalxvencerNopagable = 0;
-        crearLoteRepository.getDatosxvencer(1)
+        carteraVencerRepository.getDatosxvencer(1)
             .then(function successCallback(response) {
                 $scope.gridXvencer.data = response.data;
 

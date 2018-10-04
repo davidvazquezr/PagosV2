@@ -35,18 +35,6 @@ registrationModule.factory('crearLoteRepository', function($http) {
                     'Content-Type': 'application/json'
                 }
             });
-        },
-        getDatosxvencer: function(idEmpresa) {
-            return $http({
-                url: crealLoteUrl + 'datosxvencer/',
-                method: "GET",
-                params: {
-                    idEmpresa: idEmpresa
-                },
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
         }
     };
 });
