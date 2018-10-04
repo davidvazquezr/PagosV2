@@ -45,6 +45,20 @@ crearLote.prototype.get_bancosCompleta = function(req, res, next) {
         });
     });
 }
+crearLote.prototype.get_datosxvencer = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }];
+
+    this.model.query('SEL_PROGRAMACION_PAGOSXVENCER_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 
 
 module.exports = crearLote;

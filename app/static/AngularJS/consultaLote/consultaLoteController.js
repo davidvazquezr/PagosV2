@@ -19,8 +19,6 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
 
      $scope.ConsultaLoteObtieneBusqueda = function(Lote, index, esAplicacionDirecta) {
       location.href = '/?idLote=' + Lote.idLotePago;
-        // var url = new URL(window.location.href);
-        // var c = url.searchParams.get("idLote");
      };
 
     $scope.BuscarLotes = function() {
