@@ -18,9 +18,7 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
 
 
      $scope.ConsultaLoteObtieneBusqueda = function(Lote, index, esAplicacionDirecta) {
-        console.log('Lote____________')
-        console.log(Lote)
-
+      location.href = '/?idLote=' + Lote.idLotePago;
      };
 
     $scope.BuscarLotes = function() {
@@ -33,7 +31,7 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
         $rootScope.gridLotesoptions.columnDefs = [
             { name: 'idLotePago', displayName: 'Lote', width: '5%', enableCellEdit: false, visible: true },
             { name: 'fecha', displayName: 'Fecha Lote', type: 'date', cellFilter: 'date:"dd/MM/yyyy"', width: '10%', enableCellEdit: false },
-            { name: 'nombre', width: '10%' },
+            { name: 'nombre', width: '20%' },
             { name: 'descLote', displayName: 'Estatus de Lote', width: '20%' },
             { name: 'descError', displayName: 'Error', width: '20%', visible: false },
             { name: 'totalPagar', displayName: 'Total a pagar', width: '10%', cellFilter: 'currency', enableCellEdit: false },
