@@ -67,7 +67,6 @@ registrationModule.controller('crearLoteController', function($scope, $rootScope
             var encabezadoLote = result.data[0];
             if (encabezadoLote.nombre) {
                 $scope.nombreLote = encabezadoLote.nombre;
-                $scope.datosEmpresa.encabezadoLote = encabezadoLote;
                 var promiseEmpresas = $rootScope.obtieneEmpresas();
                 promiseEmpresas.then(function(res) {
                     var empresa = res.filter(function(empresa) {
