@@ -27,7 +27,7 @@
                         <tr ng-repeat="ingreso in ingresos">
                             <td>{{ingreso.cuenta}}</td>
                             <td>
-                                <input type="text" ng-model="ingreso.saldo" ng-blur="calculaSaldoIngresos(ingreso)" class="form-control txtIngresos valores" ng-keypress="presskey($event)" onkeypress="return isNumberKey(event)">
+                                <input type="text" ng-model="ingreso.saldo" class="form-control txtIngresos valores" ng-keypress="presskey($event)" >
                             </td>
                             <td ng-class="{'danger':ingreso.disponible == '0', 'warning':ingreso.disponible < (ingreso.saldo / 2),'info': ingreso.disponible > (ingreso.disponible / 2)}">{{ingreso.disponible | currency}}</td>
                         </tr>

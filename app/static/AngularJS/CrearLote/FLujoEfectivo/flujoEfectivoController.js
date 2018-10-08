@@ -52,5 +52,39 @@ registrationModule.controller('flujoEfectivoController', function($scope, $rootS
         });
         return ingresos.promise;
     };
+    // 
+    $scope.calculaSaldoIngresos = function(ingreso) {
+        var total = 0;
+        angular.forEach($scope.transferencias, function(transferencia, key) {
+            if (transferencia.bancoOrigen == ingreso.cuenta) {
+                total = parseInt(total) + parseInt(transferencia.importe);
+            }
+        });
+        ingreso.disponible = parseInt(ingreso.saldo) - parseInt(total);
+        angular.forEach($scope.egresos, function(egreso, key) {
+            if ((ingreso.cuenta == egreso.cuenta) && egreso.ingreso == 1)
+                egreso.saldoIngreso = ingreso.disponible;
+        });
+        angular.forEach($scope.transferencias, function(transferencia, key) {
+            if (transferencia.bancoOrigen == ingreso.cuenta)
+                transferencia.disponibleOrigen = ingreso.disponible;
+        });
+        if (parseInt(ingreso.disponible) < 0)
+            alertFactory.warning('El saldo disponible de esta cuenta es menor a 0. Verifique las transferencias.');
+        $scope.calculaTotalOperaciones();
+    };
+    $scope.presskey = function(event) {
+        if (event.which === 13) {
+            $scope.calculaTotalOperaciones();
+            recalculaIngresos();
+        }
+    };
+    $scope.isNumberKey = function(evt) {
+        //var e = evt || window.event;
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+    // 
 });
-//1000
