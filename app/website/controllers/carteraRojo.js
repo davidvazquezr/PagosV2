@@ -1,12 +1,12 @@
 var request = require('request'),
-    carteraVencerModel = require('../models/dataAccess'),
-    carteraVencerView = require('../views/pagos');
+    carteraRojoModel = require('../models/dataAccess'),
+    carteraRojoView = require('../views/pagos');
 
 
-var carteraVencer = function(conf) {
+var carteraRojo = function(conf) {
     this.conf = conf || {};
-    this.view = new carteraVencerView();
-    this.model = new carteraVencerModel({
+    this.view = new carteraRojoView();
+    this.model = new carteraRojoModel({
         parameters: this.conf.parameters
     });
   
@@ -15,13 +15,13 @@ var carteraVencer = function(conf) {
     }
 }
 
-carteraVencer.prototype.get_datosxvencer = function(req, res, next) {
+carteraRojo.prototype.get_datosEnRojo = function(req, res, next) {
 
     var self = this;
 
     var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }];
 
-    this.model.query('SEL_PROGRAMACION_PAGOSXVENCER_SP', params, function(error, result) {
+    this.model.query('SEL_PROGRAMACION_PAGOSENROJO_SP', params, function(error, result) {
 
         self.view.expositor(res, {
             error: error,
@@ -30,5 +30,4 @@ carteraVencer.prototype.get_datosxvencer = function(req, res, next) {
     });
 }
 
-
-module.exports = carteraVencer;
+module.exports = carteraRojo;

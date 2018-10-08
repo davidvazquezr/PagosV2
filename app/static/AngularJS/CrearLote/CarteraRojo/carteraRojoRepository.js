@@ -1,10 +1,10 @@
-var carteraVencerUrl = global_settings.urlNode + 'carteraVencer/';
+var carteraRojoUrl = global_settings.urlNode + 'carteraRojo/';
 
-registrationModule.factory('carteraVencerRepository', function($http) {
+registrationModule.factory('carteraRojoRepository', function($http) {
     return {
-        getDatosxvencer: function(idEmpresa) {
+        getDatosenRojo: function(idEmpresa) {
             return $http({
-                url: carteraVencerUrl + 'datosxvencer/',
+                url: carteraRojoUrl + 'datosEnRojo/',
                 method: "GET",
                 params: {
                     idEmpresa: idEmpresa
@@ -13,6 +13,7 @@ registrationModule.factory('carteraVencerRepository', function($http) {
                     'Content-Type': 'application/json'
                 }
             });
-        }
+        }       
+      
     };
 });
