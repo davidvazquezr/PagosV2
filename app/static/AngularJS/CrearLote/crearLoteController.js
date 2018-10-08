@@ -73,7 +73,6 @@ registrationModule.controller('crearLoteController', function($scope, $rootScope
             if (encabezadoLotes.length > 0) { //Lote para editar
                 var encabezadoLote = result.data[0];
                 $scope.nombreLote = encabezadoLote.nombre;
-                $scope.datosEmpresa.encabezadoLote = encabezadoLote;
                 var promiseEmpresas = $rootScope.obtieneEmpresas();
                 promiseEmpresas.then(function(res) {
                     var empresa = res.filter(function(empresa) {

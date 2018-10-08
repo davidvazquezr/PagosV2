@@ -1,212 +1,29 @@
 registrationModule.controller('carteraVencerController', function($scope, $rootScope, alertFactory, carteraVencerRepository, uiGridGroupingConstants, utils, uiGridConstants, ) {
 
-    $scope.loteController = '';
     $scope.gridXvencer = null;
-    $scope.bancoPago = [];
-    $scope.hidenotifi = false;
     $scope.gridXvencer = [];
-    //getParametrosEscenarios 9
-    //selbancoPagoLote 'BANCOMER 4667'
 
-    $scope.$watch("customer", function(newValue, oldValue) {
-       $scope.init();
+    $scope.$watch("customer.idEmpresa", function(newValue, oldValue) {
+        console.log($scope.customer.idEmpresa)
+        console.log('SERA CARTERA X VENCER :', $scope.customer)
+        $scope.init();
     }, true);
 
-    $scope.init = function(){
-         setTimeout(function() { $scope.preparaGrid(); }, 5000);
-    }
-
-    $scope.preparaGrid = function() {
-        $scope.idEmpresa = $scope.customer.encabezadoLote.idEmpresa;
-        $scope.idLote = $scope.customer.idLote;
-
-        ConfiguraGridxvencer();
-        $scope.LlenaIngresos();
-        $scope.llenagridxvencer();
-        $scope.selbancoPagoLote($scope.egresos,'BANCOMER 4667');
-        
-        $scope.hidebuscando = true;
-        $scope.grdnoPagable = 0;
-        $scope.idLotePadre = $scope.customer.idLote;
-        $scope.estatusLote = $scope.customer.encabezadoLote.estatus;
-        $scope.NuevoLote = false;
-
-        if ($scope.customer.encabezadoLote.pal_esAplicacionDirecta == 1) {
-            $scope.pagoDirectoSeleccion = true;
-            $scope.selPlantaBanco = true;
-        } else {
-            $scope.pagoDirectoSeleccion = false;
-            $scope.selPlantaBanco = false;
-        }
-        if ($scope.estatusLote == 2) {
-            $scope.expaprobado = true;
-        } else {
-            $scope.expaprobado = false;
-        }
-
-
-        $scope.llenaParametroEscenarios();
-        carteraVencerRepository.getOtrosIngresos($scope.idLote)
-            .then(function successCallback(response) {
-                $scope.caja = 0;
-                $scope.cobrar = 0;
-                if (response.data.length > 0) {
-                    $scope.caja = response.data[0].pio_caja;
-                    $scope.cobrar = response.data[0].pio_cobranzaEsperada;
-                }
-            }, function errorCallback(response) {
-                alertFactory.error('Error al obtener Otros Ingresos.');
-            });
-        carteraVencerRepository.getTransferencias($scope.idLote)
-            .then(function successCallback(response) {
-                $scope.transferencias = [];
-                if (response.data.length > 0) {
-                    angular.forEach(response.data, function(transferencia, key) {
-                        var newTransferencia = transferencia;
-                        $scope.transferencias.push(newTransferencia);
-                    });
-                } else {
-                    var newTransferencia = { bancoOrigen: '', bancoDestino: '', importe: 0, index: index };
-                    $scope.transferencias.push(newTransferencia);
-                }
-            }, function errorCallback(response) {
-                alertFactory.error('Error al obtener Transferencias.');
-            });
-
-
-        if ($scope.estatusLote == 0) { 
-            $scope.gridOptions.isRowSelectable = function(row) {
-                if (row.entity.seleccionable == 'True') {
-                    return false;
-                } else {
-                    return true;
-                }
-            };
-            $scope.gridApi1.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
-            $scope.gridApi1.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
-
-
-            $('#btnTotalxEmpresa').button('reset');
-            if ($scope.crearLote) {
-                $scope.crearLote = false;
-            }
-        } else 
-            carteraVencerRepository.getDatosAprob($scope.idLote)
-            .success(llenaLoteConsultaSuccessCallback) 
-            .error(errorCallBack);
+    $scope.init = function() {
         setTimeout(function() {
-            $("#btnSelectAll").click(); 
-            $rootScope.verlote = false;
-            $rootScope.vermodal = true;
-            $rootScope.verbusqueda = true;
-            $rootScope.vermonitor = true;
-            $rootScope.verunificacion = true;
-            $scope.calculaTotalOperaciones();
-            recalculaIngresos();
-        }, 500);
-
-        if ($scope.estatusLote < 2) {
-            setTimeout(function() {
-                pagoRepository.getDatos($rootScope.idEmpresa)
-                    .success(getCarteraModificar)
-                    .error(errorCallBack);
-            }, 200);
-        }
-
-
+            $scope.idEmpresa = 1
+            ConfiguraGridxvencer();
+            $scope.llenagridxvencer($scope.idEmpresa);
+        }, 400);
     }
-
-    var llenaLoteConsultaSuccessCallback = function(data, status, headers, config) {
-        $scope.grdBancos = [];
-        $scope.grdApagar = 0;
-        if ($scope.gridOptions == null)
-
-      
-
-      
-        $scope.data = data;
-        $scope.carteraVencida = 0;
-        $scope.cantidadTotal = 0;
-        $scope.cantidadUpdate = 0;
-        $scope.noPagable = 0;
-        $scope.Reprogramable = 0;
-
-        $scope.pdPlanta = $scope.escenarios.Pdbanco;
-        $scope.pdBanco = $scope.escenarios.Pdplanta;
-        $scope.refPlanta = $scope.escenarios.TipoRefPlanta;
-        $scope.refpdBanco = $scope.escenarios.tipoRefBanco;
-
-        var cuentaEncontrada = true;
-        for (var i = 0; i < $scope.data.length; i++) {
-
-            $scope.data[i].Pagar = $scope.data[i].saldo;
-            $scope.data[i].fechaPago = $scope.data[i].fechaPromesaPago;
-            if ($scope.data[i].fechaPromesaPago == "1900-01-01T00:00:00") {
-                $scope.data[i].fechaPromesaPago = "";
-                var Pagoxvencer = $scope.data[i];
-                //$scope.grdPagoxvencer.push(Pagoxvencer);
-            }
-
-            if ($scope.data[i].agrupamiento > 0) {
-                $scope.data[i].agrupar = true;
-
-            } else {
-                $scope.data[i].agrupar = false;
-            }
-
-            if ($scope.data[i].seleccionable == "False") {
-                $scope.data[i].estGrid = 'Pago';
-                if (i == 0) {
-                    $scope.grdBancos.push({
-                        banco: $scope.data[i].cuentaPagadora,
-                        subtotal: $scope.data[i].Pagar
-                    });
-                    $scope.grdApagar = $scope.grdApagar + $scope.data[i].Pagar;
-                } else {
-                    cuentaEncontrada = false;
-                    $scope.grdBancos.forEach(function(banco, k) {
-                        if ($scope.data[i].cuentaPagadora == $scope.grdBancos[k].banco) {
-                            $scope.grdBancos[k].subtotal = Math.round($scope.grdBancos[k].subtotal * 100) / 100 + Math.round($scope.data[i].Pagar * 100) / 100;
-                            $scope.grdApagar = $scope.grdApagar + Math.round($scope.data[i].Pagar * 100) / 100;
-                            cuentaEncontrada = true;
-                        }
-                    });
-                    if (!cuentaEncontrada) {
-                        $scope.grdBancos.push({
-                            banco: $scope.data[i].cuentaPagadora,
-                            subtotal: $scope.data[i].Pagar
-                        });
-                        $scope.grdApagar = $scope.grdApagar + $scope.data[i].Pagar;
-                    }
-                }
-            }
-            if ($scope.data[i].seleccionable == 'True') {
-                $scope.data[i].Pagar = $scope.data[i].saldo;
-                $scope.data[i].estGrid = 'No pagar';
-            }
-            if ($scope.data[i].documentoPagable == 'False') {
-                $scope.data[i].Pagar = $scope.data[i].saldo;
-            }
-            // $scope.data[i].agrupar = 0;
-            $scope.data[i].numagrupar = i;
-            $scope.carteraVencida = $scope.carteraVencida + $scope.data[i].saldo;
-        }
-        $scope.noPagable = $scope.carteraVencida - $scope.cantidadTotal;
-
-        //$scope.gridOptions.data = data;
-        $scope.gridXvencer.data = data;
-        $scope.blTotales = false;
-    };
 
     $scope.llenagridxvencer = function(idempresa) {
         $scope.GranTotalxvencer = 0;
         $scope.GranTotalxvencerPagable = 0;
         $scope.GranTotalxvencerNopagable = 0;
-        carteraVencerRepository.getDatosxvencer(1)
+        carteraVencerRepository.getDatosxvencer(idempresa)
             .then(function successCallback(response) {
                 $scope.gridXvencer.data = response.data;
-
-
                 var tamdata = $scope.gridXvencer.data.length;
                 for (var i = 0; i < tamdata; i++) {
                     if ($scope.gridXvencer.data[i].seleccionable == "False") {
@@ -310,125 +127,6 @@ registrationModule.controller('carteraVencerController', function($scope, $rootS
     }
 
 
-    $scope.LlenaIngresos = function() {
-        carteraVencerRepository.getIngresos($scope.idEmpresa, $scope.idLote)
-            .then(function successCallback(response) {
-                $scope.bancoIngresos = [];
-                $scope.ingresos = response.data;
-                angular.forEach(response.data, function(varIngreso, key) {
-                    var newIngreso = varIngreso;
-                    if (newIngreso.cuenta != $scope.bancoPago.cuenta) {
-                        $scope.bancoIngresos.push(newIngreso);
-                    }
-                });
-                $scope.egresos = [];
-                $scope.egresos.push($scope.bancoPago);
-                $scope.calculaTotalOperaciones();
-                recalculaIngresos();
-            }, function errorCallback(response) {
-                alertFactory.error('Error al obtener los Ingresos');
-            });
-    };
-
-
-    $scope.selbancoPagoLote = function(egresos, bancoLote) {
-
-        angular.forEach(egresos, function(egreso, key) {
-
-            if (egreso.cuenta == bancoLote)
-                $scope.bancoPago = egreso;
-        });
-
-    }
-
-
-    $scope.llenaParametroEscenarios = function() {
-        carteraVencerRepository.getParametrosEscenarios(9)
-            .then(function successCallback(response) {
-                $scope.escenarios = response.data;
-                $scope.pdPlanta = $scope.escenarios.Pdbanco;
-                $scope.pdBanco = $scope.escenarios.Pdplanta;
-                $scope.refPlanta = $scope.escenarios.TipoRefPlanta;
-                $scope.refpdBanco = $scope.escenarios.tipoRefBanco;
-                if ($scope.pdPlanta || $scope.pdBanco) {
-                    $scope.selPagoDirecto = true;
-                } else {
-                    $scope.selPagoDirecto = false;
-                }
-            }, function errorCallback(response) {
-                alertFactory.error('Error al obtener los parametros del escenario de pagos.');
-            });
-    };
-
-
-    var recalculaIngresos = function() {
-        angular.forEach($scope.ingresos, function(ingreso, key) {
-            ingreso.disponible = ingreso.saldo;
-            angular.forEach($scope.transferencias, function(transferencia, key) {
-                if (ingreso.cuenta == transferencia.bancoOrigen)
-                    ingreso.disponible = ingreso.disponible - transferencia.importe;
-            });
-            angular.forEach($scope.TotalxEmpresas, function(empresa, key) {
-                angular.forEach($scope.egresos, function(egreso, key) {
-                    if (empresa.cuentaPagadora == egreso.cuenta)
-                        empresa.saldoLote = egreso.total;
-                });
-            });
-        });
-        angular.forEach($scope.egresos, function(egreso, key1) {
-            angular.forEach($scope.grdBancos, function(grdBanco, key2) {
-                if (egreso.cuenta == grdBanco.banco)
-                    grdBanco.subtotalLote = egreso.total;
-            });
-        });
-    }
-
-    $scope.calculaTotalOperaciones = function() {
-
-        var totalDestino = 0;
-        angular.forEach($scope.transferencias, function(transferencia, key) {
-            totalDestino = totalDestino + parseInt(transferencia.importe);
-        });
-        $scope.egresos[0].aTransferir = totalDestino;
-    }
-
-
-     var setGroupValues = function(columns, rows) {
-        columns.forEach(function(column) {
-            if (column.grouping && column.grouping.groupPriority > -1 && column.treeAggregation.type !== uiGridGroupingConstants.aggregation.CUSTOM) {
-                column.treeAggregation.type = uiGridGroupingConstants.aggregation.CUSTOM;
-                column.customTreeAggregationFn = function(aggregation, fieldValue, numValue, row) {
-                    if (typeof(aggregation.value) === 'undefined') {
-                        aggregation.value = 0;
-                    }
-                    aggregation.value = aggregation.value + row.entity.Pagar;
-                };
-                column.customTreeAggregationFinalizerFn = function(aggregation) {
-                    if (typeof(aggregation.groupVal) !== 'undefined') {
-                        aggregation.rendered = aggregation.groupVal + ' (' + $filter('currency')(aggregation.value) + ')';
-                    } else {
-                        aggregation.rendered = null;
-                    }
-                };
-            }
-        });
-        return columns;
-    };
-    //Funcion para que obligue a editar la referencia si tiene convenio CIE.
-
-    var cellEditableCIE = function($scope) {
-        if ($scope.row.entity.convenioCIE === '')
-            return false;
-        else {
-            $scope.row.entity.seleccionable == "False"
-            $scope.row.entity.estGrid = 'Pago';
-            return true;
-        }
-    }
-
-     var errorCallBack = function(data, status, headers, config) {
-        alertFactory.error('Ocurrio un problema');
-    };
-
+    var errorCallBack = function(data, status, headers, config) { alertFactory.error('Ocurrio un problema'); };
 
 });
