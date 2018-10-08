@@ -45,6 +45,7 @@ registrationModule.controller("unificacionController", function($scope, $rootSco
                 } else if ($scope.compara.estatus == 1) {
                     $rootScope.modalCuentaUni = cuenta;
                     $rootScope.modalCliente = $scope.cliente;
+                    $('#modalUnifica').insertAfter($('body'));
                     $('#modalUnifica').modal('show')
                     //alertFactory.success('Exito total ');
                 }

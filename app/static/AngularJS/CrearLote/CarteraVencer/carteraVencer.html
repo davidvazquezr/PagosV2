@@ -1,6 +1,39 @@
-<div class="input-group col-sm-12" style="border: 1px solid black">
-    <p>Cartera por vencer de lote {{loteController}}<p>
-           <!--  <div id="contenedor" ng-hide="hidenotifi">
-                <div id="grid2" ui-grid="gridXvencer" ui-grid-grouping ui-grid-edit ui-grid-selection ui-grid-cellNav class="gridStylexvencer"></div>
-            </div> -->
+<div class="input-group col-sm-12">
+    <section id="filtros" ng-hide="btnsTesoreria">
+        <div class="tituloBloque2" ng-hide="selPlantaBanco">
+            <span class="colText ">3.- Cartera por vencer
+            <div class="clsNoPagable separadorNoPagable">
+            </div>
+            </span>
+        </div>
+        <div id="filtrosCarteraRojo">
+            <div class="row panelTotalescarteraRojo">
+                <div id="clsComplemento">
+                    <div class="clsNoPagable">
+                        <span class="clsDetailLabel">Total x Vencer</span> <span id="mano" class="clsDetailText blueInfo" ng-click="BorraFiltrosxvencer()">{{GranTotalxvencerPagable + GranTotalxvencerNopagable | currency}}</span>
+                    </div>
+                    <div class="clsNoPagable separadorNoPagable">
+                        /
+                    </div>
+                    <div class="clsNoPagable">
+                        <span class="clsDetailLabel">Pagable</span> <span id="mano" class="clsDetailText blueInfo" ng-click="Filtrar('False',32,'Pagables')">{{GranTotalxvencerPagable | currency}}
+                        </span>
+                    </div>
+                    <div class="clsNoPagable separadorNoPagable">
+                        /
+                    </div>
+                    <div class="clsNoPagable">
+                        <span class="clsDetailLabel">No pagable</span> <span id="mano" class="clsDetailText blueInfo" ng-click="Filtrar('True',32,'No Pagables')">{{GranTotalxvencerNopagable | currency}}
+                        </span>
+                    </div>
+                    <div class="clsNoPagable separadorNoPagable">
+                        /
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="contenedor">
+            <div ui-grid="gridXvencer" ui-grid-grouping ui-grid-edit ui-grid-selection ui-grid-cellNav class="gridStylexvencer"></div>
+        </div>
+    </section>
 </div>

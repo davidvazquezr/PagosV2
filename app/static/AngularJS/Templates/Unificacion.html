@@ -77,4 +77,31 @@
             <button type="button" class="btn btn-success pull-right" ng-click="verificaCuenta()" ng-if="cuentaSel"><i class="glyphicon glyphicon-indent-right"> Unificar</i></button>
         </div>
     </div>
+    <!-- Modal unificacion -->
+        <div class="modal fade" id="modalUnifica" tabindex="-1" role="dialog" aria-labelledby="modalUnifica" aria-hidden="true" ng-controller="unificacionController">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">¿Está seguro que desea unificar la cuenta?
+                    </div>
+                    <div class="modal-body">
+                            <dl class="dl-horizontal">
+                                <dt>Banco:</dt>
+                                <dd>{{modalCuenta.BCO_BANCO}}</dd>
+                                <dt>Número de Cuenta:</dt>
+                                <dd>{{modalCuenta.BCO_NUMCUENTA}}</dd>
+                                <dt>CLABE:</dt>
+                                <dd>{{modalCuenta.BCO_CLABE}}</dd>
+                                <dt ng-if="modalCuenta.BCO_CONVENIOCIE">Convenio:</dt>
+                                <dd ng-if="modalCuenta.BCO_CONVENIOCIE">{{modalCuenta.BCO_CONVENIOCIE}}</dd>
+                            </dl>
+                            <p class="text-danger"><strong>Recuerde que el cambio es irreversible al aplicar la unificación de cuentas.</strong></p>
+                    </div>
+                    <div class="modal-footer">
+                            <a id="bt-modal-cancel" href="#" class="btn btn-default" data-dismiss="modal">Cancelar</a>
+                            <button type="button" id="btn_borralote" class="btn btn-primary" ng-click="unifica(modalCuenta.idProveedor)">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--  -->
 </div>

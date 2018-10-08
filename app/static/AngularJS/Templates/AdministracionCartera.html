@@ -125,4 +125,70 @@
             </p>
         </div>
     </div>
+    <!-- Modal administrador de cuentas -->
+            <div class="modal fade" id="modalAdmoCuentas" tabindex="-1" role="dialog" aria-labelledby="modalUnifica" aria-hidden="true" ng-controller="admonCarteraController">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">Búsqueda de proveedores </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form class="form-inline">
+                                        <input type="text" class="form-control proveedor" placeholder="Id" ng-model="id" ng-disabled="nombre" value="">
+                                        <input type="text" class="form-control" placeholder="Nombre" ng-model="nombre" ng-disabled="id" value="">
+                                        <button type="submit" class="btn btn-primary" ng-click="busqueda(id, nombre)"><i class="glyphicon glyphicon-search"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="row space-top" ng-show="clientes">
+                                <div class="col-sm-12">
+                                    <table id="proveedores" class="table table-striped table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Id Proveedor</th>
+                                                <th>Nombre</th>
+                                                <th>RFC</th>
+                                                <th>Seleccionar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="cliente in clientes">
+                                                <td>{{cliente.idProveedor}}</td>
+                                                <td>{{cliente.Nombre}}</td>
+                                                <td>{{cliente.RFC}}</td>
+                                                <td class="text-center">
+                                                    <button type="submit" class="btn btn-success" ng-click="proveedor(cliente)"><i class="glyphicon glyphicon-ok"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a id="bt-modal-cancel" href="#" class="btn btn-default" data-dismiss="modal">Salir</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <!--  -->
+    <!-- Modal Mensaje Carteras -->
+        <div class="modal fade" id="modalAdminCartera" tabindex="-1" role="dialog" aria-labelledby="modalAdminCartera" aria-hidden="true" ng-controller="admonCarteraController">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-center header-modal">
+                        <span class="glyphicon glyphicon-info-sign icon-t"></span>
+                        <!-- <span class="glyphicon glyphicon-info-sign" ></span> -->
+                    </div>
+                    <div class="modal-body text-center">
+                        <p class="text-warning text-modal-body"><strong>¿Está seguro que desea cambiar la fecha promesa de pago?</strong></p>
+                    </div>
+                    <div class="modal-footer">
+                        <a id="bt-modal-cancel" href="#" class="btn btn-default" data-dismiss="modal">Cancelar</a>
+                        <button type="button" id="btn_AdminCuentas" class="btn btn-primary" ng-click="cambiarFecha()">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--  -->
 </div>
