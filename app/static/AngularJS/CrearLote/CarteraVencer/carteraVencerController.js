@@ -11,7 +11,7 @@ registrationModule.controller('carteraVencerController', function($scope, $rootS
 
     $scope.init = function() {
         setTimeout(function() {
-            $scope.idEmpresa = 1
+            $scope.idEmpresa = $scope.customer.idEmpresa
             ConfiguraGridxvencer();
             $scope.llenagridxvencer($scope.idEmpresa);
         }, 400);
