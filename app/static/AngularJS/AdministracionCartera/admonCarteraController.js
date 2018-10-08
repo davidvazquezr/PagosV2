@@ -14,6 +14,7 @@ registrationModule.controller("admonCarteraController", function($scope, $rootSc
         });
     };
     $scope.modalBusqueda = function() {
+        $('#modalAdmoCuentas').insertAfter($('body'));
         $('#modalAdmoCuentas').modal('show')
     };
     $scope.proveedor = function(cliente) {
@@ -153,6 +154,7 @@ registrationModule.controller("admonCarteraController", function($scope, $rootSc
             alertFactory.warning("Debe seleccionar una fecha mayor al dia de hoy");
         } else {
             $rootScope.fechaPromesaPago = fechaProm;
+            $('#modalAdminCartera').insertAfter($('body'));
             $('#modalAdminCartera').modal('show')
         }
 
