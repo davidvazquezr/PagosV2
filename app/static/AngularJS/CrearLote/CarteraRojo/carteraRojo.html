@@ -1,3 +1,14 @@
-<div>
-	HOLA AQUI IRA LA CARTERA ROJO
+<div class="input-group col-sm-12">
+ <section id="filtros" ng-hide="btnsTesoreria">
+        <div class="tituloBloque3" ng-hide="selPlantaBanco">
+            <span class="colText ">4.- Cartera en Rojo
+            <div class="clsNoPagable separadorNoPagable">
+                        /
+                    </div>
+            Saldo total: {{GranTotalenRojo | currency}}</span>
+        </div>
+        <div id="contenedor" ng-hide="hidenotifi">
+            <div id="grid2" ui-grid="gridenRojo" ui-grid-grouping ui-grid-edit ui-grid-selection ui-grid-cellNav class="gridStylexvencer"></div>
+        </div>
+    </section>
 </div>

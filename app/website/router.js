@@ -8,5 +8,6 @@
  	consultaLote: require('./controllers/consultaLote'),
  	crearLote: require('./controllers/crearLote'),
  	carteraVencer: require('./controllers/carteraVencer'),
- 	flujoEfectivo: require('./controllers/flujoEfectivo')
+ 	flujoEfectivo: require('./controllers/flujoEfectivo'),
+ 	carteraRojo: require('./controllers/carteraRojo'),
  }
