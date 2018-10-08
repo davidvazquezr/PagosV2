@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 #contentManager {
     margin-left: 50px;
     margin-right: 50px;
@@ -408,7 +409,6 @@ grid .panelEncabezado {
 
 .tituloBloque1 {
     font-size: 20px;
-    margin-left: 3%;
     border-bottom: 4px dotted #D29935;
     width: 50%;
     margin-bottom: 10px;
@@ -842,26 +842,40 @@ grid .panelEncabezado {
     border-radius: 50%;
     background: white;
 }
+
 /*----------------------------------------------*/
 /*------*/
-.radio-input{
-  
-}
+.radio-input {}
+
 /*------*/
-.mt-label{
+.mt-label {
     margin-top: 24px;
 }
-.puntero{
+
+.puntero {
     cursor: pointer;
 }
-.text-total{
+
+.text-total {
     font-size: 30px;
 }
-.text-titulo{
+
+.text-titulo {
     font-size: 15px;
     padding-top: 18px;
     font-weight: 600;
 }
-.m-t{
+
+.m-t {
     margin-top: 12px;
+}
+
+.m-r-b {
+    margin-right: 5px;
+}
+
+.activeScroll {
+    height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }

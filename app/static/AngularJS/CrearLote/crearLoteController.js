@@ -7,13 +7,15 @@ registrationModule.controller('crearLoteController', function($scope, $rootScope
             $scope.editar = false;
             $scope.datosEmpresa = {
                 idEmpresa: 0,
-                idLote: 0
+                idLote: 0,
+                cuentaPagadora: null
             };
         } else {
             $scope.editar = true;
             $scope.datosEmpresa = {
                 idEmpresa: 0,
-                idLote: idLote
+                idLote: idLote,
+                cuentaPagadora: null
             };
             obtenerLotes($scope.datosEmpresa.idEmpresa, $rootScope.currentEmployee, $scope.datosEmpresa.idLote);
         }
@@ -24,6 +26,9 @@ registrationModule.controller('crearLoteController', function($scope, $rootScope
         $scope.datosEmpresa.idEmpresa = empresa.emp_idempresa;
         obtenerEgresos(empresa.emp_idempresa);
         traeBancosCompleta(empresa.emp_idempresa);
+        if ($scope.datosEmpresa.idLote == 0) {
+            obtenerLotes(empresa.emp_idempresa, $rootScope.currentEmployee, $scope.datosEmpresa.idLote);
+        }
         // obtenerLotes($scope.datosEmpresa.idEmpresa, $rootScope.currentEmployee, $scope.datosEmpresa.idLote);
     };
     var limpiaVariables = function() {
@@ -39,6 +44,7 @@ registrationModule.controller('crearLoteController', function($scope, $rootScope
     };
     $scope.selBancoPago = function(egreso) {
         $scope.bancoPago = egreso;
+        $scope.datosEmpresa.cuentaPagadora = egreso;
     };
     var traeBancosCompleta = function(idEmpresa) {
         crearLoteRepository.obtenerBancosCompleta(idEmpresa).then(function successCallback(result) {
@@ -48,7 +54,6 @@ registrationModule.controller('crearLoteController', function($scope, $rootScope
             $scope.GranTotalaPagar = bancosCompletas.sumaSaldo;
             $scope.GranTotalnoPagable = bancosCompletas.sumaSaldoNoPagable;
             $scope.GranTotalPagable = bancosCompletas.sumaSaldoPagable;
-
         }, function errorCallback(result) {
             console.log(result)
         })
@@ -64,20 +69,21 @@ registrationModule.controller('crearLoteController', function($scope, $rootScope
             idLote: idLote
         };
         crearLoteRepository.obtieneEncabezadoLote(params).then(function successCallback(result) {
-            var encabezadoLote = result.data[0];
-            if (encabezadoLote.nombre) {
+            var encabezadoLotes = result.data;
+            if (encabezadoLotes.length > 0) { //Lote para editar
+                var encabezadoLote = result.data[0];
                 $scope.nombreLote = encabezadoLote.nombre;
-                //
                 var promiseEmpresas = $rootScope.obtieneEmpresas();
                 promiseEmpresas.then(function(res) {
                     var empresa = res.filter(function(empresa) {
                         return empresa.emp_idempresa === encabezadoLote.idEmpresa;
                     })[0];
+                    $scope.empresaSeleccion(empresa);
                     $scope.nombreEmpresa = empresa.emp_nombre;
                 });
-                //
-            } else {
-                $scope.nombreLote = 'Soy nuevo';
+            } else { //Lote Nuevo
+                $scope.nombreLote = ("0" + ($scope.fechaHoy.getMonth() + 1)).slice(-2) + ("0" + $scope.fechaHoy.getDate()).slice(-2) + $scope.fechaHoy.getFullYear() + '-' + $rootScope.empresa.rfc + '-' + ('0' + (encabezadoLotes.length + 1)).slice(-2);;
+                $scope.nombreEmpresa = $rootScope.empresa.emp_nombre;
             }
             console.log(result);
         }, function errorCallback(result) {
@@ -85,6 +91,7 @@ registrationModule.controller('crearLoteController', function($scope, $rootScope
         });
         console.log(idEmpresa, idUsuario, idLote, 'Soy lo de obtenerLotes')
     };
-
+    $scope.crearLote = function() {
+        $scope.editar = true;
+    };
 });
-/*$scope.formData.nombreLoteNuevo = ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2) + date.getFullYear() + '-' + $rootScope.empresarfc + '-' + ('0' + ($scope.noLotes.data.length + 1)).slice(-2);*/
