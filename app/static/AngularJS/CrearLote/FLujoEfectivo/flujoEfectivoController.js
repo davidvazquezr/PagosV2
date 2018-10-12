@@ -86,5 +86,13 @@ registrationModule.controller('flujoEfectivoController', function($scope, $rootS
             return false;
         return true;
     }
+    $scope.calculaTotalOperaciones = function() {
+
+        var totalDestino = 0;
+        angular.forEach($scope.transferencias, function(transferencia, key) {
+            totalDestino = totalDestino + parseInt(transferencia.importe);
+        });
+        // $scope.egresos[0].aTransferir = totalDestino;
+    };
     // 
 });
