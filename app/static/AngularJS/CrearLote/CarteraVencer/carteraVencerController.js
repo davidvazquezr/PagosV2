@@ -4,17 +4,14 @@ registrationModule.controller('carteraVencerController', function($scope, $rootS
     $scope.gridXvencer = [];
 
     $scope.$watch("customer.idEmpresa", function(newValue, oldValue) {
-        console.log($scope.customer.idEmpresa)
-        console.log('SERA CARTERA X VENCER :', $scope.customer)
-        $scope.init();
+        $scope.idEmpresa = $scope.customer.idEmpresa
+        if ($scope.idEmpresa > 0)
+            $scope.init();
     }, true);
 
     $scope.init = function() {
-        setTimeout(function() {
-            $scope.idEmpresa = $scope.customer.idEmpresa
-            ConfiguraGridxvencer();
-            $scope.llenagridxvencer($scope.idEmpresa);
-        }, 400);
+        ConfiguraGridxvencer();
+        $scope.llenagridxvencer($scope.idEmpresa);
     }
 
     $scope.llenagridxvencer = function(idempresa) {
@@ -23,15 +20,19 @@ registrationModule.controller('carteraVencerController', function($scope, $rootS
         $scope.GranTotalxvencerNopagable = 0;
         carteraVencerRepository.getDatosxvencer(idempresa)
             .then(function successCallback(response) {
-                $scope.gridXvencer.data = response.data;
-                var tamdata = $scope.gridXvencer.data.length;
-                for (var i = 0; i < tamdata; i++) {
-                    if ($scope.gridXvencer.data[i].seleccionable == "False") {
-                        $scope.gridXvencer.data[i].estGrid = 'XVENCERPAGABLE';
-                        $scope.GranTotalxvencerPagable = $scope.GranTotalxvencerPagable + $scope.gridXvencer.data[i].saldo;
-                    } else {
-                        $scope.GranTotalxvencerNopagable = $scope.GranTotalxvencerNopagable + $scope.gridXvencer.data[i].saldo;
+
+                if (response.data.length > 0) {
+                    $scope.gridXvencer.data = response.data;
+                    var tamdata = $scope.gridXvencer.data.length;
+                    for (var i = 0; i < tamdata; i++) {
+                        if ($scope.gridXvencer.data[i].seleccionable == "False") {
+                            $scope.gridXvencer.data[i].estGrid = 'XVENCERPAGABLE';
+                            $scope.GranTotalxvencerPagable = $scope.GranTotalxvencerPagable + $scope.gridXvencer.data[i].saldo;
+                        } else {
+                            $scope.GranTotalxvencerNopagable = $scope.GranTotalxvencerNopagable + $scope.gridXvencer.data[i].saldo;
+                        }
                     }
+
                 }
             }, function errorCallback(response) {
                 $scope.gridXvencer.data = [];

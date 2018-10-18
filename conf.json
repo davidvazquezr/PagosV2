@@ -4,5 +4,6 @@
     "SQL_password": "S0p0rt3",
     "SQL_server": "192.168.20.92",
     "SQL_database": "Pagosv2",
-    "SQL_connectionTimeout": 60000
+    "SQL_connectionTimeout": 60000,
+    "SQL_requestTimeout" : 60000
 } 

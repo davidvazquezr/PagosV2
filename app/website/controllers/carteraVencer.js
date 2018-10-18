@@ -19,10 +19,13 @@ carteraVencer.prototype.get_datosxvencer = function(req, res, next) {
 
     var self = this;
 
-    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }];
+    var dia = new Date();
+    dia = dia.getDay();
+
+    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT },
+                  { name: 'diaDeLaSemana', value: dia, type: self.model.types.INT }];
 
     this.model.query('SEL_PROGRAMACION_PAGOSXVENCER_SP', params, function(error, result) {
-
         self.view.expositor(res, {
             error: error,
             result: result
