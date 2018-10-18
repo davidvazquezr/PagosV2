@@ -30,5 +30,6 @@ registrationModule.factory('monitorRepository', function($http) {
                 }
             });
         },
+        
     };
 });

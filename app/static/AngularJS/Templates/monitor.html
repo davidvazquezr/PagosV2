@@ -11,4 +11,22 @@
     <div class="rows">
         <div ui-grid="gridtesoreriaoptions" ui-grid-selection ></div>
     </div>
+    <!-- Inicia Modal  TXT-->
+    <div class="modal fade" id="modalTXT" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="monitorController">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">Generación del archvio TXT para el banco</div>
+                <div class="modal-body">
+                    <div class="alert alert-info" role="alert">
+                        <strong>Generar txt!!</strong> Genera el archivo y lo descarga en su navegador.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a id="bt-modal-cancel" href="#" class="btn btn-default" data-dismiss="modal">Cancelar</a>
+                    <button type="button" id="btn_generaTXT" class="btn btn-primary" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Generando Archivo" ng-click="GenerarArchivo(varidempresaTXT,varidlote,varfechaini,varfechafin)">Generar Archivo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Modal  TXT-->
 </div>
