@@ -1,4 +1,4 @@
-registrationModule.controller('consultaLoteController', function($scope, $rootScope, alertFactory, consultaLoteRepository,monitorRepository) {
+registrationModule.controller('consultaLoteController', function($scope, $rootScope, alertFactory, consultaLoteRepository, monitorRepository) {
     openCloseNav();
 
     $rootScope.empresa = "";
@@ -17,9 +17,9 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
 
 
 
-     $scope.ConsultaLoteObtieneBusqueda = function(Lote, index, esAplicacionDirecta) {
-      location.href = '/?idLote=' + Lote.idLotePago;
-     };
+    $scope.ConsultaLoteObtieneBusqueda = function(Lote, index, esAplicacionDirecta) {
+        location.href = '/?idLote=' + Lote.idLotePago;
+    };
 
     $scope.BuscarLotes = function() {
 
@@ -53,7 +53,7 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
 
 
     $scope.Buscar = function(fechaini, fechafin) {
-      
+
         var fecha_ini = $scope.formatDate(fechaini);
         var fecha_fin = $scope.formatDate(fechafin);
 
@@ -73,16 +73,16 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
     $scope.modalLibera = function(idLote) {
         $('#modallibera').insertAfter($('body'));
         $('#modallibera').modal('show');
-        consultaLoteRepository.getliberar(idLote)
+        consultaLoteRepository.getDocsliberar(idLote)
             .then(function successCallback(response) {
-                 $rootScope.liberarcxp = response.data;
+                $rootScope.liberarcxp = response.data;
                 $rootScope.idloteliberar = idLote;
             }, function errorCallback(response) {
                 alertFactory.error('Los documentos estan aplicados.');
             });
     };
 
-    
+
     $scope.formatDate = function(date) {
         var d = new Date(date),
             month = '' + (d.getMonth() + 1),
@@ -92,5 +92,22 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
         if (day.length < 2) day = '0' + day;
         return [year, month, day].join('/');
     }
+
+
+
+    $scope.liberarlote = function(idLote, documento) {
+        $scope.isDisabled = true;
+        consultaLoteRepository.liberaDocumento(idLote, documento).then(function successCallback(response) {
+            if (response.data.length == 0) {
+                $scope.isDisabled = false;
+            }
+                 $scope.isDisabled = false;
+            $scope.modalLibera(idLote);
+        }, function errorCallback(response) {
+            $scope.isDisabled = false;
+        });
+        
+    }
+
 
 });

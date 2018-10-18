@@ -15,7 +15,7 @@ var consultaLote = function(conf) {
     }
 }
 
-consultaLote.prototype.get_liberarDocs = function(req, res, next) {
+consultaLote.prototype.get_docsliberar = function(req, res, next) {
 
      var self = this;
 
@@ -29,5 +29,21 @@ consultaLote.prototype.get_liberarDocs = function(req, res, next) {
     });
 }
 
+consultaLote.prototype.get_liberar = function(req, res, next) {
+
+     var self = this;
+
+    var params = [{ name: 'idLote', value: req.query.idLote, type: self.model.types.INT},
+                  { name: 'documento', value: req.query.documento, type: self.model.types.STRING}];
+
+    console.log(params)
+    
+    this.model.query('PROC_LIBERA_DOCUMENTO_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
 
 module.exports = consultaLote;

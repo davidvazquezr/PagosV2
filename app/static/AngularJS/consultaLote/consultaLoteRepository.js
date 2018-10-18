@@ -14,12 +14,25 @@ registrationModule.factory('consultaLoteRepository', function($http) {
                 }
             });
         },
-          getliberar: function(idLote) {
+          getDocsliberar: function(idLote) {
             return $http({
-                url: consultaLoteUrl + 'liberarDocs/',
+                url: consultaLoteUrl + 'docsliberar/',
                 method: "GET",
                 params: {
                     idLote: idLote
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+          liberaDocumento: function(idLote,documento) {
+            return $http({
+                url: consultaLoteUrl + 'liberar/',
+                method: "GET",
+                params: {
+                    idLote: idLote,
+                    documento: documento
                 },
                 headers: {
                     'Content-Type': 'application/json'
