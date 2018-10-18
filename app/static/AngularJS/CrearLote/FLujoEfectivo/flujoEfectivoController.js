@@ -73,19 +73,11 @@ registrationModule.controller('flujoEfectivoController', function($scope, $rootS
             alertFactory.warning('El saldo disponible de esta cuenta es menor a 0. Verifique las transferencias.');
         $scope.calculaTotalOperaciones();
     };
-    $scope.presskey = function(event) {
-        if (event.which === 13) {
-            $scope.calculaTotalOperaciones();
-            recalculaIngresos();
-        }
+    $scope.presskey = function(saldo, index) {
+        $scope.ingresos[index].saldo = parseInt(saldo);
+        $scope.ingresos[index].disponible = parseInt(saldo);
+        console.log(saldo,'SOY EL SALDO', index, 'SOY LA POSICION')
     };
-    $scope.isNumberKey = function(evt) {
-        //var e = evt || window.event;
-        var charCode = (evt.which) ? evt.which : event.keyCode
-        if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-        return true;
-    }
     $scope.calculaTotalOperaciones = function() {
 
         var totalDestino = 0;

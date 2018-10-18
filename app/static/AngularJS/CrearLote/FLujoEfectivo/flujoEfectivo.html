@@ -1,3 +1,4 @@
+<link href="AngularJS/CrearLote/FlujoEfectivo/flujoEfectivo.css" rel="stylesheet" />
 <div ng-init="init()" class="m-t">
     <div class="row">
         <div class="col-sm-12">
@@ -27,7 +28,7 @@
                         <tr ng-repeat="ingreso in ingresos">
                             <td>{{ingreso.cuenta}}</td>
                             <td>
-                                <input type="text" ng-model="ingreso.saldo" class="form-control txtIngresos valores" ng-keypress="presskey($event)" >
+                                <input type="number" ng-model="ingreso.saldo" class="form-control txtIngresos valores" ng-change="presskey(ingreso.saldo, $index)">
                             </td>
                             <td ng-class="{'danger':ingreso.disponible == '0', 'warning':ingreso.disponible < (ingreso.saldo / 2),'info': ingreso.disponible > (ingreso.disponible / 2)}">{{ingreso.disponible | currency}}</td>
                         </tr>
@@ -125,9 +126,8 @@
                                 <div class="input-group-btn">
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <li ng-repeat="egreso in egresos">
-                                            <a href="#" class="egresosCombo">
-                                                            {{bancoPago.cuenta}}
-                                                        </a>
+                                            <a href="#" class="egresosCombo">                                      {{bancoPago.cuenta}}
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>
@@ -136,7 +136,8 @@
                             <!-- /input-group -->
                         </td>
                         <td>
-                            <input type="text" ng-keypress="presskey($event)" onkeypress="return isNumberKey(event)" ng-blur="calculaTransferencia(transferencia)" ng-model="transferencia.importe" class="form-control txtIngresos">
+                            <input type="text" ng-keypress="presskey($event)" ng-model="transferencia.importe" class="form-control txtIngresos">
+                            <!-- ng-blur="calculaTransferencia(transferencia)" -->
                         </td>
                         <td>
                             <button type="button" class="btn btn-danger" id="btnDel" ng-click="delTransferencia(transferencia)">
@@ -154,7 +155,7 @@
         </div>
     </div>
     <!-- <input type="text" ng-model="customer.idEmpresa">
-	<div>HOLA {{customer.idEmpresa}}</div>
-	<button class="btn btn-primary" ng-click="hola()">Click Me</button> -->
+    <div>HOLA {{customer.idEmpresa}}</div>
+    <button class="btn btn-primary" ng-click="hola()">Click Me</button> -->
     <div cartera-pagar-directive customer="datosEmpresa"></div>
 </div>
