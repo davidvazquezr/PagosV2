@@ -1,19 +1,34 @@
 registrationModule.controller('carteraRojoController', function($scope, $rootScope, alertFactory, carteraRojoRepository) {
 
+    $scope.gridenRojo = null;
     $scope.gridenRojo = [];
 
     $scope.$watch("customer.idEmpresa", function(newValue, oldValue) {
-        $scope.init();
+        $scope.idEmpresa = $scope.customer.idEmpresa
+        if ($scope.idEmpresa > 0)
+            $scope.init();
     }, true);
 
-
     $scope.init = function() {
-        setTimeout(function() {
-            $scope.idEmpresa = $scope.customer.idEmpresa
-            ConfiguraGridenRojo();
-            $scope.llenagridenRojo($scope.idEmpresa);
-        }, 400);
+        ConfiguraGridenRojo();
+        $scope.llenagridenRojo($scope.idEmpresa);
     }
+
+    $scope.llenagridenRojo = function(idempresa) {
+        $scope.GranTotalenRojo = 0;
+        carteraRojoRepository.getDatosenRojo(idempresa)
+            .then(function successCallback(response) {
+                if (response.data.length > 0) {    
+                    $scope.gridenRojo.data = response.data;
+                    var tamdata = $scope.gridenRojo.data.length;
+                    for (var i = 0; i < tamdata; i++) {
+                        $scope.GranTotalenRojo = $scope.GranTotalenRojo + $scope.gridenRojo.data[i].saldo;
+                    }
+                }
+            }, function errorCallback(response) {
+                $scope.gridenRojo.data = [];
+            });
+    };
 
     var ConfiguraGridenRojo = function() {
 
@@ -99,19 +114,6 @@ registrationModule.controller('carteraRojoController', function($scope, $rootSco
         };
     }
 
-
-    $scope.llenagridenRojo = function(idempresa) {
-        $scope.GranTotalenRojo = 0;
-        carteraRojoRepository.getDatosenRojo(idempresa)
-            .then(function successCallback(response) {
-                $scope.gridenRojo.data = response.data;
-                var tamdata = $scope.gridenRojo.data.length;
-                for (var i = 0; i < tamdata; i++) {
-                    $scope.GranTotalenRojo = $scope.GranTotalenRojo + $scope.gridenRojo.data[i].saldo;
-                }
-            }, function errorCallback(response) {
-                $scope.gridenRojo.data = [];
-            });
-    };
+    var errorCallBack = function(data, status, headers, config) { alertFactory.error('Ocurrio un problema en carteraRojoController.js'); };
 
 });

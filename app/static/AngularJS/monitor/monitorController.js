@@ -13,6 +13,10 @@ registrationModule.controller('monitorController', function($scope, $rootScope, 
         $scope.buscarLotes = true;
     }
 
+    $scope.ConsultaLoteObtieneTesoreria = function(Lote, index, esAplicacionDirecta) {
+        location.href = '/?idLote=' + Lote.idLotePago;
+       };    
+
     $scope.BuscarTesoreria = function() {
 
         $scope.gridtesoreriaoptions = {
@@ -62,7 +66,6 @@ registrationModule.controller('monitorController', function($scope, $rootScope, 
             });
     }
 
-
     $scope.formatDate = function(date) {
         var d = new Date(date),
             month = '' + (d.getMonth() + 1),
@@ -72,5 +75,22 @@ registrationModule.controller('monitorController', function($scope, $rootScope, 
         if (day.length < 2) day = '0' + day;
         return [year, month, day].join('/');
     }
+
+    //***********************************************************************************************************
+    //       Generar Archivo de pagos
+    //***********************************************************************************************************
+    
+    $scope.GenerarArchivoBtn = function(varidempresa, varidlote) {
+        $('#modalTXT').insertAfter($('body'));
+        $('#modalTXT').modal('show');
+        $rootScope.varidempresaTXT = varidempresa;
+        $rootScope.varidlote = varidlote;
+    }
+
+    $scope.GenerarArchivo = function() {
+        console.log('1)Entre en generarArchivo de Monitor Controller');
+        alertFactory.infoTopFull('Aun no hay nada :P !!!!');
+    }
+
 
 });
