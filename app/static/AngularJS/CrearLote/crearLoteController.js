@@ -70,21 +70,26 @@ registrationModule.controller('crearLoteController', function($scope, $rootScope
         };
         crearLoteRepository.obtieneEncabezadoLote(params).then(function successCallback(result) {
             var encabezadoLotes = result.data;
-            if (encabezadoLotes.length > 0) { //Lote para editar
-                var encabezadoLote = result.data[0];
-                $scope.nombreLote = encabezadoLote.nombre;
-                var promiseEmpresas = $rootScope.obtieneEmpresas();
-                promiseEmpresas.then(function(res) {
-                    var empresa = res.filter(function(empresa) {
-                        return empresa.emp_idempresa === encabezadoLote.idEmpresa;
-                    })[0];
-                    $scope.empresaSeleccion(empresa);
-                    $scope.nombreEmpresa = empresa.emp_nombre;
-                });
-            } else { //Lote Nuevo
+            if (params.idLote == 0) {
                 $scope.nombreLote = ("0" + ($scope.fechaHoy.getMonth() + 1)).slice(-2) + ("0" + $scope.fechaHoy.getDate()).slice(-2) + $scope.fechaHoy.getFullYear() + '-' + $rootScope.empresa.rfc + '-' + ('0' + (encabezadoLotes.length + 1)).slice(-2);;
                 $scope.nombreEmpresa = $rootScope.empresa.emp_nombre;
+            } else {
+                if (encabezadoLotes.length > 0) { //Lote para editar
+                    var encabezadoLote = result.data[0];
+                    $scope.nombreLote = encabezadoLote.nombre;
+                    var promiseEmpresas = $rootScope.obtieneEmpresas();
+                    promiseEmpresas.then(function(res) {
+                        var empresa = res.filter(function(empresa) {
+                            return empresa.emp_idempresa === encabezadoLote.idEmpresa;
+                        })[0];
+                        $scope.empresaSeleccion(empresa);
+                        $scope.nombreEmpresa = empresa.emp_nombre;
+                    });
+                } else { //Lote Nuevo
+                    alertFactory.error('Ocurrio un error');
+                }
             }
+
             console.log(result);
         }, function errorCallback(result) {
             console.log(result)
