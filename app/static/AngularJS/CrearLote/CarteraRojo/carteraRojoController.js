@@ -10,11 +10,13 @@ registrationModule.controller('carteraRojoController', function($scope, $rootSco
     }, true);
 
     $scope.init = function() {
+        $scope.isLoading = false;
         ConfiguraGridenRojo();
         $scope.llenagridenRojo($scope.idEmpresa);
     }
 
     $scope.llenagridenRojo = function(idempresa) {
+        $scope.isLoading = true;
         $scope.GranTotalenRojo = 0;
         carteraRojoRepository.getDatosenRojo(idempresa)
             .then(function successCallback(response) {
@@ -25,8 +27,10 @@ registrationModule.controller('carteraRojoController', function($scope, $rootSco
                         $scope.GranTotalenRojo = $scope.GranTotalenRojo + $scope.gridenRojo.data[i].saldo;
                     }
                 }
+                $scope.isLoading = false;
             }, function errorCallback(response) {
                 $scope.gridenRojo.data = [];
+                $scope.isLoading = false;
             });
     };
 

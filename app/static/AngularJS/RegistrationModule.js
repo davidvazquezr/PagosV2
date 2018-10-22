@@ -63,8 +63,7 @@
         });
 
         $routeProvider.when('/loading', {
-            templateUrl: '/AngularJS/Templates/loading.html',
-            controller: 'loadingController'
+            templateUrl: '/AngularJS/Templates/loading.html'
         });
 
         $locationProvider.html5Mode(true);

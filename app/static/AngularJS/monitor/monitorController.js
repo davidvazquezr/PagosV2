@@ -5,6 +5,7 @@ registrationModule.controller('monitorController', function($scope, $rootScope, 
     $scope.buscarLotes = false;
 
     $scope.init = function() {
+        $scope.isLoading = false;
         $scope.BuscarTesoreria();
     };
 
@@ -51,7 +52,7 @@ registrationModule.controller('monitorController', function($scope, $rootScope, 
 
     $scope.Buscar = function(fechaini, fechafin) {
         
-        $('#loader').show();
+        $scope.isLoading = true;
 
         var fecha_ini = $scope.formatDate(fechaini);
         var fecha_fin = $scope.formatDate(fechafin);
@@ -60,15 +61,14 @@ registrationModule.controller('monitorController', function($scope, $rootScope, 
             .then(function successCallback(response) {
                 
                 if (response.data.length == 0){
-                    $('#loader').hide();
                     alertFactory.infoTopFull('No existen lotes para este rango de fechas');
                 }                
                 else {
-                    $('#loader').hide();
                     $scope.gridtesoreriaoptions.data = response.data;
                 }
+                $scope.isLoading = false;
             }, function errorCallback(response) {
-                $('#loader').hide();
+                $scope.isLoading = false;
                 alertFactory.error('Error al obtener los datos del encabezado.');
             });
     }
