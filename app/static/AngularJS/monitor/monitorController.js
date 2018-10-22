@@ -50,18 +50,25 @@ registrationModule.controller('monitorController', function($scope, $rootScope, 
 
 
     $scope.Buscar = function(fechaini, fechafin) {
-      
+        
+        $('#loader').show();
+
         var fecha_ini = $scope.formatDate(fechaini);
         var fecha_fin = $scope.formatDate(fechafin);
 
         monitorRepository.getLotesxFecha($rootScope.empresa.emp_idempresa, 77, fecha_ini, fecha_fin, 3)
             .then(function successCallback(response) {
-                if (response.data.length == 0)
+                
+                if (response.data.length == 0){
+                    $('#loader').hide();
                     alertFactory.infoTopFull('No existen lotes para este rango de fechas');
-                else
+                }                
+                else {
+                    $('#loader').hide();
                     $scope.gridtesoreriaoptions.data = response.data;
-
+                }
             }, function errorCallback(response) {
+                $('#loader').hide();
                 alertFactory.error('Error al obtener los datos del encabezado.');
             });
     }
