@@ -10,4 +10,5 @@
  	carteraVencer: require('./controllers/carteraVencer'),
  	flujoEfectivo: require('./controllers/flujoEfectivo'),
  	carteraRojo: require('./controllers/carteraRojo'),
+ 	carteraPagar: require('./controllers/carteraPagar')
  }
