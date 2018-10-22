@@ -1,3 +1,83 @@
-<div>
-	HOLA ESTOY EN LA DIRECTIVA PARA CARTERA VENCIDA
+<div class="input-group col-sm-12">
+  <section id="filtros">
+        <div class="tituloBloque2" ng-hide="selPlantaBanco">
+            <span class="colText ">2.- Cartera a pagar </span>
+        </div>
+        <div id="filtrosContenedor">
+            <div id="mdContentSuma3">
+                <div class="rows">
+                    <div class="sumTexto">
+                        A pagar
+                    </div>
+                    <div class="sumMonto montoFinal blueInfo">
+                        <span id="mano" ng-click="Filtrar('pago',31,'A pagar')">{{grdApagar | currency}}
+                    </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row panelTotales">
+                <div id="clsComplemento">
+                    <div class="clsNoPagable">
+                        <span class="clsDetailLabel">Todos</span> <span id="mano" class="clsDetailText blueInfo" ng-click="BorraFiltros()">{{TotalSaldoPagar | currency}}</span>
+                    </div>
+                    <div class="clsNoPagable separadorNoPagable">
+                        /
+                    </div>
+                    <div class="clsNoPagable">
+                        <span class="clsDetailLabel">Pagable</span> <span id="mano" class="clsDetailText blueInfo" ng-click="Filtrar('False',32,'Pagables')">{{GranTotalPagable | currency}}
+                        </span>
+                    </div>
+                    <div class="clsNoPagable separadorNoPagable">
+                        /
+                    </div>
+                    <div class="clsNoPagable">
+                        <span class="clsDetailLabel">No pagable</span> <span id="mano" class="clsDetailText blueInfo" ng-click="Filtrar('True',32,'No Pagables')">{{TotalSaldoPagar - GranTotalPagable | currency}}
+                        </span>
+                    </div>
+                    <div class="clsNoPagable separadorNoPagable">
+                        /
+                    </div>
+                    <div class="clsNoPagable">
+                        <span class="clsDetailLabel">No Incluido</span> <span id="mano" class="clsDetailText blueInfo" ng-click="Filtrar('Permitido',31,'No incluidos')">  {{ grdNoIncluido | currency }}</span>
+                    </div>
+                    <div class="clsNoPagable separadorNoPagable">
+                        /
+                    </div>
+                    <div class="clsNoPagable">
+                        <span class="clsDetailLabel">Reprogramado</span> <span id="mano" class="clsDetailText blueInfo" ng-click="Filtrar('Pago Reprogramado',31,'Pago Reprogramado')">
+                        {{ grdReprogramado | currency }}
+                          </span>
+                    </div>
+                    <div class="clsNoPagable separadorNoPagable">
+                        /
+                    </div>
+                    <div class="clsNoPagable">
+                        <span class="clsDetailLabel">Porcentaje a pagar</span> <span class="clsDetailText blueInfo"> {{ (((grdApagar) * 100) / ( GranTotal )) | number:2 }} %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="container">
+        <div class="row radio-input">
+            <div class="col-sm-12">
+                <label class="containerRadio" ng-click="tipoPago = 6">Pago directo referenciado
+                    <input type="radio" name="radio" value="6" ng-model="tipoPago">
+                    <span class="checkmarkRadio"></span>
+                </label>
+                <label class="containerRadio" ng-click="tipoPago = 2">Pago directo
+                    <input type="radio" name="radio" value="2" ng-model="tipoPago">
+                    <span class="checkmarkRadio"></span>
+                </label>
+                <label class="containerRadio" ng-click="tipoPago = 1">Pago por txt
+                    <input type="radio" name="radio" value="1" ng-model="tipoPago">
+                    <span class="checkmarkRadio"></span>
+                </label>
+            </div>
+        </div>
+   
+        <div id="contenedor">
+            <div id="grid1" ui-grid="gridOptions" ui-grid-grouping ui-grid-edit ui-grid-selection ui-grid-cellNav class="gridStyle"></div>
+        </div>
+    </section> 
 </div>

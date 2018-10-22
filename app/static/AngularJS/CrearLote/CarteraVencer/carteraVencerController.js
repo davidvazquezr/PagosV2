@@ -1,4 +1,4 @@
-registrationModule.controller('carteraVencerController', function($scope, $rootScope, alertFactory, carteraVencerRepository, uiGridGroupingConstants, utils, uiGridConstants, ) {
+registrationModule.controller('carteraVencerController', function($scope, $rootScope, alertFactory, carteraVencerRepository, uiGridGroupingConstants, utils, uiGridConstants ) {
 
     $scope.gridXvencer = null;
     $scope.gridXvencer = [];
