@@ -1,28 +1,22 @@
-registrationModule.controller('carteraPagarController', function($scope, $rootScope, alertFactory,uiGridGroupingConstants , utils, uiGridConstants, $filter, $routeParams, $window,carteraPagarRepository) {
-    
-    $scope.gridOptions = null;
+registrationModule.controller('carteraPagarController', function($scope, $rootScope, alertFactory, uiGridGroupingConstants, utils, uiGridConstants, $filter, $routeParams, $window, carteraPagarRepository) {
+
     $scope.gridOptions = [];
+    $scope.nombreLoteNuevo = "10232018-AUN1402117H9-01";
+    $scope.grdApagar = 0;
 
     $scope.$watch("customer.idEmpresa", function(newValue, oldValue) {
+
         $scope.idEmpresa = $scope.customer.idEmpresa
         if ($scope.idEmpresa > 0)
-        	$scope.init();
+            $scope.init();
     }, true);
 
-
-    $scope.init = function(){
-    	$scope.llenaGrid();
+    $scope.init = function() {
+        ConfiguraGrid();
+        $scope.llenaGrid();
     };
 
-    $scope.llenaGrid = function(){
-    carteraPagarRepository.getDatosCarteraPagar($scope.idEmpresa)
-                .success(getCarteraCallback)
-                .error(errorCallBack);
-    };
-
-    var getCarteraCallback = function(data, status, headers, config) {
-        //FAL fecha no presentada y contadores
-        $scope.data = data;
+    $scope.llenaGrid = function() {
         $scope.carteraVencida = 0;
         $scope.cantidadTotal = 0;
         $scope.cantidadUpdate = 0;
@@ -31,126 +25,115 @@ registrationModule.controller('carteraPagarController', function($scope, $rootSc
         $scope.TotalSaldoPagar = 0;
         var contador = 1;
 
-        $scope.pdPlanta = $scope.escenarios.Pdplanta;
-        $scope.pdBanco = $scope.escenarios.Pdbanco;
-        $scope.refPlanta = $scope.escenarios.TipoRefPlanta;
-        $scope.refpdBanco = $scope.escenarios.tipoRefBanco;
+        $scope.pdPlanta = true //$scope.escenarios.Pdplanta;
+        $scope.pdBanco = true //$scope.escenarios.Pdbanco;
+        $scope.refPlanta = 3 //$scope.escenarios.TipoRefPlanta;
+        $scope.refpdBanco = 3 //$scope.escenarios.tipoRefBanco;
         $scope.grdPagoDirecto = [];
-        var j = 0;
-        var tamdata = $scope.data.length;
-        for (var i = 0; i < tamdata; i++) {
+
+        carteraPagarRepository.getDatosCarteraPagar($scope.idEmpresa)
+            .then(function successCallback(response) {
+                    if (response.data.length > 0) {
+
+                        $scope.data = response.data
+                        var j = 0;
+                        var tamdata = $scope.data.length;
+
+                        for (var i = 0; i < tamdata; i++) {
 
 
-            $scope.TotalSaldoPagar = $scope.TotalSaldoPagar + $scope.data[i].saldo;
-            $scope.data[i].Pagar = $scope.data[i].saldo;
-            $scope.data[i].fechaPago = $scope.data[i].fechaPromesaPago;
-            $scope.data[i].agrupar = 0;
+                            $scope.TotalSaldoPagar = $scope.TotalSaldoPagar + $scope.data[i].saldo;
+                            $scope.data[i].Pagar = $scope.data[i].saldo;
+                            $scope.data[i].fechaPago = $scope.data[i].fechaPromesaPago;
+                            $scope.data[i].agrupar = 0;
 
 
 
-            if ($scope.data[i].fechaPromesaPago == "1900-01-01T00:00:00") {
-                $scope.data[i].fechaPromesaPago = "";
-            }
+                            if ($scope.data[i].fechaPromesaPago == "1900-01-01T00:00:00") {
+                                $scope.data[i].fechaPromesaPago = "";
+                            }
 
-            //FAL 23052016 dependiendo la lista de 
-            if ($scope.pdPlanta) {
-                if ($scope.data[i].idProveedor == 7) {
-                    $scope.data[i].referencia = 'Planta';
-                    var datadirecto = $scope.data[i];
-                    $scope.grdPagoDirecto.push(datadirecto);
-                } else {
-                    $scope.data[i].referencia = '';
-                }
-            }
-            if ($scope.pdPlanta) {
-                if ($scope.data[i].idProveedor == 6) {
-                    $scope.data[i].referencia = 'Financiera';
-                    var datadirecto = $scope.data[i];
-                    $scope.grdPagoDirecto.push(datadirecto);
-                }
-            }
-            if ($scope.pdBanco) {
-                if ($scope.data[i].esBanco == 'true') {
-                    $scope.data[i].referencia = 'Banco';
-                }
-            }
+                            //FAL 23052016 dependiendo la lista de 
+                            if ($scope.pdPlanta) {
+                                if ($scope.data[i].idProveedor == 7) {
+                                    $scope.data[i].referencia = 'Planta';
+                                    var datadirecto = $scope.data[i];
+                                    $scope.grdPagoDirecto.push(datadirecto);
+                                } else {
+                                    $scope.data[i].referencia = '';
+                                }
+                            }
+                            if ($scope.pdPlanta) {
+                                if ($scope.data[i].idProveedor == 6) {
+                                    $scope.data[i].referencia = 'Financiera';
+                                    var datadirecto = $scope.data[i];
+                                    $scope.grdPagoDirecto.push(datadirecto);
+                                }
+                            }
+                            if ($scope.pdBanco) {
+                                if ($scope.data[i].esBanco == 'true') {
+                                    $scope.data[i].referencia = 'Banco';
+                                }
+                            }
 
-            if ($scope.data[i].seleccionable == "False") {
-                $scope.data[i].estGrid = 'Pago';
-            }
+                            if ($scope.data[i].seleccionable == "False") {
+                                $scope.data[i].estGrid = 'Pago';
+                            }
 
-            if ($scope.data[i].seleccionable == 'True') {
-                $scope.data[i].Pagar = $scope.data[i].saldo;
-                $scope.data[i].estGrid = 'No pagar';
-            }
+                            if ($scope.data[i].seleccionable == 'True') {
+                                $scope.data[i].Pagar = $scope.data[i].saldo;
+                                $scope.data[i].estGrid = 'No pagar';
+                            }
 
-            if ($scope.data[i].documentoPagable == 'False') {
-                $scope.data[i].Pagar = $scope.data[i].saldo;
-            }
+                            if ($scope.data[i].documentoPagable == 'False') {
+                                $scope.data[i].Pagar = $scope.data[i].saldo;
+                            }
 
-            // if (($scope.data[i].numeroSerie).length == 17) {
-            //     $scope.data[i].referencia = $scope.data[i].numeroSerie.substring(9, 17);
-            // }
+                            // if (($scope.data[i].numeroSerie).length == 17) {
+                            //     $scope.data[i].referencia = $scope.data[i].numeroSerie.substring(9, 17);
+                            // }
 
-            if (($scope.data[i].autorizado == 1) && ($scope.data[i].seleccionable == "False")) {
-                $scope.data[i].seleccionable = 'False';
-            } else {
-                $scope.data[i].seleccionable = 'True';
-            }
+                            if (($scope.data[i].autorizado == 1) && ($scope.data[i].seleccionable == "False")) {
+                                $scope.data[i].seleccionable = 'False';
+                            } else {
+                                $scope.data[i].seleccionable = 'True';
+                            }
 
-            if ($scope.data[i].convenioCIE === '') {
-                $scope.data[i].agrupar = 0;
-            } else {
-                $scope.data[i].seleccionable == "False";
-                $scope.data[i].estGrid = 'Pago';
-            }
+                            if ($scope.data[i].convenioCIE === '') {
+                                $scope.data[i].agrupar = 0;
+                            } else {
+                                $scope.data[i].seleccionable == "False";
+                                $scope.data[i].estGrid = 'Pago';
+                            }
 
-            $scope.data[i].agrupar = 0;
-            $scope.data[i].numagrupar = i;
-            //FAL17052016 Valido si lleva numero de serie y si es de lenght = 17 lo pango en referencia.
-            $scope.carteraVencida = $scope.carteraVencida + $scope.data[i].saldo;
+                            $scope.data[i].agrupar = 0;
+                            $scope.data[i].numagrupar = i;
+                            //FAL17052016 Valido si lleva numero de serie y si es de lenght = 17 lo pango en referencia.
+                            $scope.carteraVencida = $scope.carteraVencida + $scope.data[i].saldo;
 
 
-        }
-        $scope.noPagable = $scope.carteraVencida - $scope.cantidadTotal;
 
-        //FAL 20062016 separación de cartera en caso de pago directo
 
-        if ($scope.selPlantaBanco) {
+                        } //fin de for que recorre todos los lotes a pagar
+                        $scope.noPagable = $scope.carteraVencida - $scope.cantidadTotal;
+                        $scope.gridOptions.data = $scope.data;
 
-            $scope.datosModal = $scope.grdPagoDirecto;
+                        $scope.estatusLote = 0;
+                        $scope.accionPagina = true;
+                        $scope.grdApagar = 0;
+                        $scope.grdBancos = [];
+                        
+                    } //fin IF .lenght
+                },
+                function errorCallback(response) {
+                    $scope.gridOptions.data = [];
+                });
+    }
 
-        } else {
-            $scope.datosModal = $scope.data;
-
-        }
-
-        //var newLote = { idLotePago: '0', idEmpresa: $rootScope.idEmpresa, idUsuario: $rootScope.currentEmployee, fecha: '', nombre: $scope.formData.nombreLoteNuevo, estatus: 0 };
-        //$scope.ObtieneLotes(newLote);
-        //$scope.LlenaIngresos();
-        $scope.estatusLote = 0;
-        //LQMA 15032016
-        $scope.accionPagina = true;
-        $scope.grdApagar = 0;
-        //FAL 19042016 llena totales de bancos desde la consulta
-        $scope.grdBancos = [];
-        $scope.grdApagar = 0;
-        $scope.bancosCompletas.forEach(function(banco, k) {
-            $scope.grdBancos.push({
-                banco: banco.cuentaPagadora,
-                subtotalLote: 0,
-                subtotal: banco.sumaSaldoPagable
-            });
-            $scope.grdApagar = $scope.grdApagar + banco.sumaSaldoPagable;
-        });
-        $scope.blTotales = true;
-        $scope.idOperacion = 0;
-        
-    };
 
     var ConfiguraGrid = function() {
 
-        $scope.idEmpleado = 71
+        $scope.idEmpleado = 71;
         $scope.gridOptions = {
             enableColumnResize: true,
             enableRowSelection: true,
@@ -165,8 +148,8 @@ registrationModule.controller('carteraPagarController', function($scope, $rootSc
                 return $scope.row.entity.seleccionable;
             },
             isRowSelectable: function(row) {
-                if (row.entity.seleccionable == "True") return false;
-                return true;
+                if (row.entity.seleccionable == "True") return false; //rirani is not selectable
+                return true; //everyone else is
             },
             columnDefs: [{
                     name: 'nombreAgrupador',
@@ -185,7 +168,7 @@ registrationModule.controller('carteraPagarController', function($scope, $rootSc
                     enableCellEdit: false,
                     cellTemplate: '<div><div ng-if="!col.grouping || col.grouping.groupPriority === undefined || col.grouping.groupPriority === null || ( row.groupHeader && col.grouping.groupPriority === row.treeLevel )" class="ui-grid-cell-contents" title="TOOLTIP">{{COL_FIELD CUSTOM_FILTERS}}</div></div>'
                 },
-                { name: 'idProveedor', displayName: 'Clave', width: '5%', enableCellEdit: false, headerTooltip: 'Nombre del provedor', cellClass: 'cellToolTip' }, ,
+                { name: 'idProveedor', displayName: 'Clave', width: '5%', enableCellEdit: false, headerTooltip: 'Nombre del provedor', cellClass: 'cellToolTip' },
                 {
                     name: 'saldo',
                     displayName: 'Saldo',
@@ -413,8 +396,8 @@ registrationModule.controller('carteraPagarController', function($scope, $rootSc
                         });
                     }
 
-                    // $scope.calculaTotalOperaciones();
-                    // recalculaIngresos();
+                    //$scope.calculaTotalOperaciones();
+                    //recalculaIngresos();
 
                 });
                 gridApi1.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue) {
@@ -491,43 +474,48 @@ registrationModule.controller('carteraPagarController', function($scope, $rootSc
                     }
                 });
             }
+        } //fin
+
+
+
+    }; //funcion
+
+
+
+    $scope.selectAllChildren = function(gridApi, rowEntity) {
+        if (rowEntity.children.length == 0) {
+            if (rowEntity.row.entity.seleccionable == "False") {
+                gridApi.selection.selectRow(rowEntity.row.entity);
+                // $scope.grdApagar = Math.round($scope.grdApagar * 100) / 100 + Math.round(rowEntity.row.entity.Pagar * 100) / 100; 
+            }
+        } else {
+            if (rowEntity.row.entity.seleccionable == "False") {
+                //  $scope.grdApagar = Math.round($scope.grdApagar * 100) / 100 + Math.round(rowEntity.row.entity.Pagar * 100) / 100; 
+                gridApi.selection.selectRow(rowEntity.row.entity);
+            }
+            var childrens = rowEntity.children;
+            for (var j = 0, length = childrens.length; j < length; j++) {
+                $scope.selectAllChildren(gridApi, childrens[j]);
+            }
         }
-    }; // fin funcion ConfiguraGrid
+    }
+    //FAL recorre cada nivel y deselecciona los hijos
+    $scope.unSelectAllChildren = function(gridApi, rowEntity) {
+        if (rowEntity.children.length == 0) {
+            gridApi.selection.unSelectRow(rowEntity.row.entity);
+            $scope.grdApagar = Math.round($scope.grdApagar * 100) / 100 - Math.round(rowEntity.row.entity.Pagar * 100) / 100;
 
-
-      $scope.calculaTotalOperaciones = function() {
-        var totalDestino = 0;
-        angular.forEach($scope.transferencias, function(transferencia, key) {
-            totalDestino = totalDestino + parseInt(transferencia.importe);
-        });
-        $scope.egresos[0].aTransferir = totalDestino;
-    };
-
-        var recalculaIngresos = function() {
-        angular.forEach($scope.ingresos, function(ingreso, key) {
-            ingreso.disponible = ingreso.saldo;
-            angular.forEach($scope.transferencias, function(transferencia, key) {
-                if (ingreso.cuenta == transferencia.bancoOrigen)
-                    ingreso.disponible = ingreso.disponible - transferencia.importe;
-            });
-            angular.forEach($scope.TotalxEmpresas, function(empresa, key) {
-                angular.forEach($scope.egresos, function(egreso, key) {
-                    //FAL integra estos calculos al arreglo de bancos para presentar en tiempo real como se va acabando el dinero.
-                    if (empresa.cuentaPagadora == egreso.cuenta)
-                        empresa.saldoLote = egreso.total;
-                });
-            });
-        });
-        angular.forEach($scope.egresos, function(egreso, key1) {
-            angular.forEach($scope.grdBancos, function(grdBanco, key2) {
-                if (egreso.cuenta == grdBanco.banco)
-                    grdBanco.subtotalLote = egreso.total;
-            });
-        });
+        } else {
+            gridApi.selection.unSelectRow(rowEntity.row.entity);
+            var childrens = rowEntity.children;
+            for (var j = 0, length = childrens.length; j < length; j++) {
+                $scope.unSelectAllChildren(gridApi, childrens[j]);
+            }
+        }
     }
 
 
-     var errorCallBack = function(data, status, headers, config) {
+    var errorCallBack = function(data, status, headers, config) {
         alertFactory.error('Ocurrio un problema');
     };
 
