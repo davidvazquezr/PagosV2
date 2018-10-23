@@ -10,11 +10,13 @@ registrationModule.controller('carteraVencerController', function($scope, $rootS
     }, true);
 
     $scope.init = function() {
+        $scope.isLoadingPorVencer = false; 
         ConfiguraGridxvencer();
         $scope.llenagridxvencer($scope.idEmpresa);
     }
 
     $scope.llenagridxvencer = function(idempresa) {
+        $scope.isLoadingPorVencer = true; 
         $scope.GranTotalxvencer = 0;
         $scope.GranTotalxvencerPagable = 0;
         $scope.GranTotalxvencerNopagable = 0;
@@ -34,8 +36,10 @@ registrationModule.controller('carteraVencerController', function($scope, $rootS
                     }
 
                 }
+                $scope.isLoadingPorVencer = false; 
             }, function errorCallback(response) {
                 $scope.gridXvencer.data = [];
+                $scope.isLoadingPorVencer = false; 
             });
     };
 

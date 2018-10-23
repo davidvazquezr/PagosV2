@@ -5,7 +5,7 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
     $scope.buscarLotes = false;
 
     $scope.init = function() {
-        console.log('Logre entrar al Consulta Lote :D')
+        $scope.isLoading = false;
         $scope.BuscarLotes();
     };
 
@@ -54,18 +54,23 @@ registrationModule.controller('consultaLoteController', function($scope, $rootSc
 
     $scope.Buscar = function(fechaini, fechafin) {
 
+        $scope.isLoading = true; 
+
         var fecha_ini = $scope.formatDate(fechaini);
         var fecha_fin = $scope.formatDate(fechafin);
 
         monitorRepository.getLotesxFecha($rootScope.empresa.emp_idempresa, 77, fecha_ini, fecha_fin, 0)
             .then(function successCallback(response) {
-                if (response.data.length == 0)
+                if (response.data.length == 0){
                     alertFactory.infoTopFull('No existen lotes para este rango de fechas');
-                else
+                }
+                else{
                     $scope.gridLotesoptions.data = response.data;
-
+                }
+                $scope.isLoading = false;    
             }, function errorCallback(response) {
                 alertFactory.error('Error al obtener los datos del encabezado.');
+                $scope.isLoading = false;
             });
     }
 
