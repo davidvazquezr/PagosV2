@@ -602,15 +602,15 @@ grid .panelEncabezado {
 
 .gridStyle {
     border: 1px solid #d4d4d4;
-    width: 1200px;
-    height: 500px;
+    /*width: 1200px;
+    height: 500px;*/
 }
 
 .gridStylexvencer {
     border: 1px solid #d4d4d4;
-    width: 1200px;
+    /*width: 1200px;
     height: 500px;
-    margin-left: 3%;
+    margin-left: 3%;*/
 }
 
 .urlTabla {
