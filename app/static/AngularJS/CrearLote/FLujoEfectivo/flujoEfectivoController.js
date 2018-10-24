@@ -10,6 +10,7 @@ registrationModule.controller('flujoEfectivoController', function($scope, $rootS
         initCuentaPagadora($scope.customer.cuentaPagadora)
     }, true);
     $scope.init = function() {
+        $scope.datosEmpresa = $scope.customer;
         console.log($scope.customer)
         initEmpresa($scope.customer)
     };

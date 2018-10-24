@@ -46,7 +46,7 @@
         </div>
         <div class="row m-t" ng-show="empresa && bancoPago">
             <div class="col-sm-12">
-                <button class="btn btn-info pull-right" ng-click="crearLote()">Crear Lote</button>
+                <button id="crearLote" class="btn btn-info pull-right" ng-click="crearLote()">Crear Lote</button>
                 <button class="btn btn-primary pull-right m-r-b">Actualizar Cartera</button>
             </div>
         </div>
@@ -81,9 +81,6 @@
         <!-- <button class="btn btn-primary pull-right">HOLA</button> -->
         <!-- <div>HOLA <input type="text" ng-model="datosEmpresa.idEmpresa"></div> -->
         <div flujo-efectivo-directive customer="datosEmpresa"></div>
-    </div>
-    <div class="row" ng-show="editar">
-        <div cartera-pagar-directive customer="datosEmpresa"></div>
     </div>
     <div class="row" ng-show="editar">
         <div cartera-vencer-directive customer="datosEmpresa"></div>

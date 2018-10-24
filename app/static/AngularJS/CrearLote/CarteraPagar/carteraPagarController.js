@@ -1,11 +1,8 @@
 registrationModule.controller('carteraPagarController', function($scope, $rootScope, alertFactory, uiGridGroupingConstants, utils, uiGridConstants, $filter, $routeParams, $window, carteraPagarRepository) {
 
     $scope.gridOptions = [];
-    $scope.nombreLoteNuevo = "10232018-AUN1402117H9-01";
-    $scope.grdApagar = 0;
 
     $scope.$watch("customer.idEmpresa", function(newValue, oldValue) {
-
         $scope.idEmpresa = $scope.customer.idEmpresa
         if ($scope.idEmpresa > 0)
             $scope.init();

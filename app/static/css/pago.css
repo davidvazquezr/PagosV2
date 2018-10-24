@@ -599,8 +599,12 @@ grid .panelEncabezado {
 }
 
 .gridStyle {
-    border: 1px solid #d4d4d4;
+   /* border: 1px solid #d4d4d4;
     width: 100%;
+    height: 500px;*/
+    border: 1px solid #d4d4d4;
+    width: 1279px;
+    /*width: 100%;*/
     height: 500px;
 }
 
